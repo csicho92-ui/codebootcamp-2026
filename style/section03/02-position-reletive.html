@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>상대위치</title>
+    <style>
+        .네모상자 {
+            width: 200px; /*가로세로 각 200픽셀의 사각형*/
+            height: 200px;
+            background-color: aqua;
+            position: absolute; 
+            top: 100px; /*위로부터 100픽셀 띄울래*/
+            left: 100px; /*왼쪽으로 부터 100픽셀 띄울래*/
+        }
+        .삭제버튼 {
+            position:relative; /*상대위치*/
+            top: 180px;
+            left: 20px;
+            }
+    </style>
+</head>
+<body>
+    <div class="네모상자"></div>
+    <button class="삭제버튼">삭제버튼</button>    
+</body>
+</html>

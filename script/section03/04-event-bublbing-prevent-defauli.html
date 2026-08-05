@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>이벤트 버블링과 기본기능 막기 실습</title>
+    <script>
+        const 좋아요기능함수 = () =>{
+             Event.pro()
+        }
+    </script>
+</head>
+<body>
+    <!-- a버튼 부모영역이 인스타 배경 사진이라고 생각한다면, 좋아요 버튼을 클릭했을때,  -->
+    <!-- 좋아요 기능만 실생이 되게 하고 싶을때 그배경 기능까지 실행되는 현상을 이벤트 버블링으로  -->
+    <!-- 생각하면 편합니다.  -->
+    <a href="https://gooogle.com">
+        <div class="butten-box">
+            <butten>인스타 좋아요</butten>
+        </div>
+    </a>
+</body>
+</html>

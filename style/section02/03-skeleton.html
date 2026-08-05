@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>스켈레톤 실습</title>
+    <STYLE>
+    .스켈레톤바탕 {
+        width: 500px;
+        height: 500px;
+        background-color: lightgray;
+    }
+    .스켈레톤막대기 {
+        width: 100px;
+        height: 500px;
+        background-color: rgb(253, 253, 253);
+        filter: blur(40px);
+
+        animation-name: 스켈레톤애니메이션;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+    }
+
+    @keyframes 스켈레톤애니메이션 {
+        from {
+            transform: translate(-400px,-400px) ROTATEZ(30deg);
+        }
+        to {
+            transform: translate(700px,200px) ROTATEZ(30deg);
+        }
+    }
+  </STYLE>
+</head>
+<body>
+    <div class="스켈레톤바탕">
+        <div class="스켈레톤막대기"></div>
+    </div>    
+</body>
+</html>

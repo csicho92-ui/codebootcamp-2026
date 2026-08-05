@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>트렌지션 실습</title>
+    <style>
+        .box {
+            width: 300px;
+            height: 300px;
+            background-color: skyblue;
+            white-space: pre; /* 텍스트 줄바꿈 되도록 인식해줌 */
+            transition: all 1s ease-in-out;
+
+            /* transition effect : 속성명 시간 함수 */
+
+            trasition-property:
+                width 0.9s 
+                height 0.9s
+                background-color 0.9s;
+        }
+
+        .box:hover {
+            width: 500px;
+            height: 500px;
+            background-color: red;
+            FILTER: BLUR(3PX);
+        }
+        </style>
+</head>
+<body>
+    <div class="box">
+        <p>
+            안녕하세요 저는 css를 학습하고 있는 사람입니다. 
+        </p>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>스티키 스크롤</title>
+    <!-- 넷플릭스에서 가로 포스터를 보여줄때 -->
+    <style>
+        .parent {
+            width: 200pt;
+            height: 300pt;
+            border: 1px solid blue;
+            display: flex;
+            overflow: scroll;
+           
+        }
+        .child {
+            width: 150px;
+            height: 200px;
+            margin: 10px;
+            background-color: aquamarine;
+            /*자식요소가 부모요소보다 작아지지 않도록 설정*/
+
+        }
+        .sticky_header {
+            position: sticky;
+            top: 0;
+            /* background-color: blueviolet; */
+            height: 50px;
+
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body>
+    <div class="parent">
+        <div class="sticky_header">스티키헤더</div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+    </div>
+ 
+</body>
+</html>

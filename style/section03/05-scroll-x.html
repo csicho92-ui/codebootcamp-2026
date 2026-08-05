@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>가로크롤 실습</title>
+    <!-- 넷플릭스에서 가로 포스터를 보여줄때 -->
+    <style>
+        .parent {
+            width: 200pt;
+            height: 200pt;
+            border: 1px solid blue;
+            display: flex;
+            flex-direction: row;
+
+            overflow: scroll;
+            overflow-x: hidden;
+            overflow-y: hidden;            
+        
+        }
+        .child {
+            width: 150px;
+            height: 200px;
+            margin: 10px;
+            background-color: aquamarine;
+            flex-shrink: 0;
+            /*자식요소가 부모요소보다 작아지지 않도록 설정*/
+
+        }
+    </style>
+</head>
+<body>
+    <div class="parent">
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+    </div>
+ 
+</body>
+</html>

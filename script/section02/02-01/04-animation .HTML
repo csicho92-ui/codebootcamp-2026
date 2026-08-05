@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>animation 실습</title>
+    <style>
+       .box {
+            width: 100px;
+            height: 150px;
+            background-color: green;
+   
+       }
+       .box:hover {
+           animation: 인피니티애니메이션;
+           animation-duration: 0.7s;
+           animation-iteration-count: infinite;
+       }
+
+       @keyframes 인피니티애니메이션 {
+            from {
+                transform: rotate(0deg);
+                background-color: green;
+            }
+            50% {
+                transform: rotate(180deg);
+                background-color: red;
+            }
+            100% {
+                transform: rotate(360deg);
+                background-color: rgb(199, 139, 27);
+            }
+       }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    
+</body>
+</html>
