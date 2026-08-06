@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>다이어리 메인페이지</title>
+    <style>
+        /* 전체에 들어가는 효과를 넣고 -> 점차 디테일한 영역으로 들어가는 것  */
+        /* 디자이너가 준 베이스를 뜯어보는 관찰적인 시선이 필요함  */
+        /* 시간이 많이 걸리는 스타일부터 빠르게 만들기  */
+
+        *{box-sizing: border-box;}
+        body {
+            margin: 0;
+            padding: 30px ;
+            background-color: antiquewhite;
+            color: #000;
+        }
+        .페이지 {
+            width: 1100px; /*이숫자는 어디서 나온거지?*/
+            margin: 0 auto;
+        }
+        .상단 {
+            margin-bottom: 20px;
+        }
+        .메뉴 {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 20px;
+        }
+        .배너 {
+            margin-top: 20px;
+            padding: 40px;
+            border-radius: 30px;
+            background-color: rgb(230, 218, 204);
+        }
+        .활성메뉴 {
+            border-bottom: 3px solid black;
+        }
+        .일기목록 {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        
+        }
+        .카드 {
+            width: 340px;
+            padding: 20px;
+            border-radius: 24px;
+        }
+        .카드윗부분 {
+            margin-bottom: 14px;
+            text-align: center;
+            font-size: 64px;
+            background-color: rgb(231, 231, 194);
+            border-radius:  20px;
+            height: 208px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .카드감정날짜 {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+
+            .태그 { color: chartreuse;}
+        }
+
+        .카드제목 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        .카드이모지 {
+            padding: 20px;
+            border-radius: 50%;
+            background-color: #fcfcfc;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="페이지"> 
+        <!-- /*페이지를 먼저 잡는다*/ -->
+        <div class="상단">
+            <h1>수인의 다이어리</h1>
+            <div class="배너">
+
+            </div>
+        </div>
+        <div class="메뉴">
+            <div class="활성메뉴">일기보관함</div>
+            <div>사진보관함</div>
+
+        </div>
+        <div class="큰영역">
+            <div class="일기목록영역">
+                <h2>일기목록</h2>
+                <div class="일기목록" id="일기목록">
+                    <div class="카드">
+                        <div class="카드윗부분">
+                            <div class="카드이모지">❤️</div>
+                        </div>
+                        <div class="카드감정날짜">
+                            <span>화나요</span>
+                            <span>2026-08-06</span>
+                        </div>
+                        <h3 class="카드제목">오늘은 힘들었어요</h3>
+                        <p class="카드내용">오늘 하루는 정말 힘들었지만, 그래도 잘 지나갔습니다. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="일기등록영역"></div>
+        </div>
+    </div>
+</body>
+</html>

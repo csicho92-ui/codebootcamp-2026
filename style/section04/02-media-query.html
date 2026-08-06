@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>미디어 쿼리 실습</title>
+    <!-- /* 쿼리란 미디어에게 하는 질문 @media (max-width: 500px) {
+    .box1 { background-color: blueviolet; }
+}
+
+이건 이렇게 읽으면 됩니다:
+
+"화면 너비가 500px 이하야? 그럼 이 스타일 써."
+
+max-width: 500px은 "최대 500px까지", 즉 500px보다 좁을 때라는 조건이에요 -->
+    <style>
+        .box1 {
+            width: 300px;
+            height: 300px;
+            background-color: blue;
+
+        }
+        /* 미디어 쿼리를 이용해서 특정 뷰포트 가로 사이즈 기준으로 우리가 원하는 스타일을 적용할 수 있음 */
+        /* 미디어 쿼리 문법에 익숙해지도록 문법을 만들자! */
+        @media (max-width:500px) {
+            /* 문법을 만들 구조를 먼저 만들고 타이핑을 하는 습관을 가지자!  */
+            .box1 {
+                width: 100px;
+                height: 100px;
+                background-color: blueviolet;
+                /* 보더레디우스가 뭐였지? */
+                border-radius: 50%; 
+
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="box1"></div>
+</body>
+</html>

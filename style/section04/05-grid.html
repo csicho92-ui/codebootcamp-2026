@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>그리드 실습</title>
+    <style>
+        .부모 {
+            width: 1600px;
+            height: 1600px;
+            
+            display: grid; /*display속성에 그리드를 적용 */
+            grid-template-columns: 300px 300px 300px;
+            /*grid-template-columns: repeat(4, 300px); -> repeat(4, 300px)은 300px 300px 300px 300px를 짧게 줄여 쓰는 방법이에요.
+즉 "300px짜리 칸을 4번 반복해서 만들어줘"라는 뜻입니다. */
+
+            /* grid-template-columns: 1fr 1fr 1fr; -> 1 : 1 : 1 비율로 만들고 싶을때 */
+            grid-template-row: 400px 400px 400px;
+            background-color: aqua;
+
+            column-gap: 70px; /*열 사이 간격*/
+            row-gap: 50px; /*행 사이 간격*/
+
+            place-items: center center;
+            place-content: center  center;
+        }
+    </style>
+</head>
+<body>
+    <div class="부모">
+        <img src="./보드2.jpg" width="300px" height="300px">
+        <img src="./보드2.jpg" width="300px" height="300px">
+        <img src="./보드2.jpg" width="300px" height="300px">
+        <img src="./보드2.jpg" width="300px" height="300px">
+        <img src="./보드2.jpg" width="300px" height="300px">
+        <img src="./보드2.jpg" width="300px" height="300px">
+        <img src="./보드2.jpg" width="300px" height="300px">
+
+    </div>
+</body>
+</html>

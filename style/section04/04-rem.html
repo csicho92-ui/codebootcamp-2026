@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Rem 사이즈</title>
+    <style>
+        .html {
+            font-size: 16px; 
+            /*기본 폰트 사이즈는16px로 안적어 줘도 됨 
+            16px는 =1rem입니다. html의 첫단은  root 라고 부릅니다.*/
+            font-size: 62.5%;
+             /* 
+                16px * 0.625 = 10px 
+                1rem = 10px
+                font siz
+            */
+
+        }
+        .상자 {
+            width: 10rem; /*160px*/
+            height: 10rem;
+            background-color: chartreuse;
+        }
+    </style>
+</head>
+<body>
+    <!-- <html 에서 기본 폰트 사이즈는 16px이다 -->
+    <!-- <DIV>이것은 기본 글 사이즈 입니다.</DIV> -->
+    <DIV class="상자"></DIV>
+    <DIV class="상자"></DIV>
+    <DIV class="상자"></DIV>
+    <DIV></DIV>
+</body>
+</html>

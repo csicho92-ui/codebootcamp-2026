@@ -3,24 +3,38 @@
 <head>
     <title>수인이의 감정일기</title>
     <style>
+
+/* 부모 상자 ┌──────────────────────┐
+
+flex-start     [A][B][C]···········   ← 왼쪽에 몰기
+flex-end       ···········[A][B][C]   ← 오른쪽에 몰기
+center         ·····[A][B][C]·····   ← 가운데
+space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 벌리기 */
+
+
         * {
-            box-sizing:border-box;}
+            box-sizing:border-box;
+            margin: 0;
+
+        }
         body {
-            margin: 0;}
+            margin: 0;
+            padding: 0 px;        
+        }
 
         .header {
-            max-width: 980px;
+            max-width: 1168px;
             margin: 0 auto;
             padding: 5px;
 
             height: 60px;
-            background-color: rgb(248, 243, 236);
-
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         .tab-list {
+            border-bottom: 2px solid black;
+            font-size: 1.5rem;
             list-style: none;
             display: flex;
             justify-content: flex-start;
@@ -31,55 +45,71 @@
         }
         .toolbar {
             height: 60px;
-            background-color: rgb(241, 241, 239);
             padding: 5px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            
         }
         .filter-group {
             height: 60px;
-            background-color: rgb(244, 248, 248);
-
             display: flex;
             gap: 12px;
             align-items: center;
+            
         }
         .main {
-            max-width: 980px;
+            max-width: 1168px;
             margin: 0 auto;
             width: 100%;
         }
         .diary-list {
             display: flex;
-            gap: 20px;
             flex-wrap: wrap;
-            justify-content: center;
+            gap: 20px;
+
         }
 
         .card {
-            height: 300px;
-            width: 200px;
-            background-color: aqua;
+            height: 480px;
+            width: 360px;
+            padding: 20px;
+            border-radius: 24px;
+        }
+        .card-emogi-back {
+            width: 180px;
+            height: 180px;
+            padding: 45px;
+            border-radius: 50%;
+            background-color: #fcfcfc;
+            
+        }
+        .card-emogi {  
+            margin-bottom: 14px;
+            text-align: center;
+            font-size: 4rem;
+            background-color: rgb(231, 231, 194);
+            border-radius:  20px;
+            height: 208px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .card-info {
             display: flex;
+            border-radius: 24px;
             justify-content: space-between;
-            margin: 5px;
         }
-        .card-img {  
-            max-width: 200px;
-            padding: 0px;
-            margin: 0px;
-            list-style: none;
-            justify-content: center;
-            width: 100%;
+
+        .card-text {
+            display: flex;
+            font-size: 1.5rem;
         }
         .footer {
             height: 60px;
-            max-width: 980px;
+            max-width: 1168px;
             margin: 0 auto;
-            background-color: rgb(241, 241, 239);
+            background-color: rgb(233, 213, 171);
             padding: 5px;
             display: flex;
             justify-content: space-between;
@@ -89,7 +119,7 @@
         .floating_button {
             width: 50pt;
             height: 50pt;
-            background-color: rgb(86, 18, 212);
+            background-color: rgb(224, 110, 95);
             border-radius: 100%;
             cursor: pointer;
 
@@ -97,166 +127,142 @@
             right: 20px;
             bottom: 20px;
         }
+        @media (max-width: 500px) {
+            
+            
+            .card-emogi {
+            height: 120px; }
 
+            .card-emogi-back {
+            width: 120px;
+            height: 120px; }
+
+            .card {
+            height: 120px;
+            width: 100%;            
+            }
+
+            .diary-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            order: 1; }
+
+            .footer {
+                order: 1;
+            }
+        }
 
     </style>
 </head>
 <body>
     <header class="header"> 
             <!-- css에서 꾸밀때 "어떤요소를 꾸밀지"찾기위해 class에 네이밍을 하는 것 -->
-           <p>수인의 다이어리</p>
+        <p>수인의 다이어리</p>
            <!-- 토글스위치 -->
            <div class="toggle-switch">
             <input type="checkbox" id="switch">
-            <label for="switch"><span class="switch-toggle"><i></i></span>다크모드
+            <label for="switch">
+                <span class="switch-toggle"><i></i></span>다크모드
             </label>
            </div>
-        </header>
+    </header>
 
         <main class="main">
             <!-- src이미지의 주소 / alt 이미지를 설명하는 것  -->
-             <!-- width="100%"-> 어떤이미지든 부모이미지보다 커지지 말아라 -->
+            <!-- width="100%"-> 어떤이미지든 부모이미지보다 커지지 말아라 -->
             <img class="cover-img" src="../img_sample/img_1.png" alt="img_sample"
             width="100%">
 
-            <ul class="tab-list">
-                <li>일기보관함</li>
-                <li>사진보관함</li>
-            </ul>
+            <div class="tab-list">
+                <div>일기보관함</div>
+                <div>사진보관함</div>
+            </div>
+
             <div class="toolbar">
                 <div class="filter-group">
                 <select class="filter-select">
 			        <option disabled="true" selected="true">전체</option>
-                        <option>???</option>
-			            <option>???</option>
-			            <option>???</option>
+                    <option>???</option>
+			        <option>???</option>
+			        <option>???</option>
                 </select>
                 <input class ="search-input" type="text" placeholder="검색어를 입력해주세요.">
                 </div>
                 <button class="write-btn">+일기쓰기</button>
             </div>
+            
             <div class="diary-list">
                 <div class="card">
-                    <img class="card-img" src="../img_sample/img_3.png" alt="img_motion" width="100%">
-                    <div class="card-info">
-                        <span>제목</span>
-                        <span>날짜</span>
+                    <div class="card-emogi">
+                    <div class="card-emogi-back">❤️</div>
                     </div>
-                <p>설명</p>
+                            <div class="card-info">
+                                <span>즐거워요1</span>
+                                <span>2026년08월06일</span>
+                            </div>
+                            <div class="card-text">
+                            <span>오늘은 열공중!</span>
+
+                            </div>
+                    </div>
+
+                    <div class="card">
+                    <div class="card-emogi">
+                    <div class="card-emogi-back">❤️</div>
+                    </div>
+                            <div class="card-info">
+                                <span>즐거워요2</span>
+                                <span>2026년08월06일</span>
+                            </div>
+                            <div class="card-text">
+                            <span>오늘은 열공중!</span>
+
+                            </div>
+                    </div>
+
+                    <div class="card">
+                    <div class="card-emogi">
+                    <div class="card-emogi-back">❤️</div>
+                    </div>
+                            <div class="card-info">
+                                <span>즐거워요3</span>
+                                <span>2026년08월06일</span>
+                            </div>
+                            <div class="card-text">
+                            <span>오늘은 열공중!</span>
+
+                            </div>
+                    </div>
+
+                     <div class="card">
+                    <div class="card-emogi">
+                    <div class="card-emogi-back">❤️</div>
+                    </div>
+                            <div class="card-info">
+                                <span>즐거워요4</span>
+                                <span>2026년08월06일</span>
+                            </div>
+                            <div class="card-text">
+                            <span>오늘은 열공중!</span>
+
+                            </div>
+                    </div>
+
+                     <div class="card">
+                    <div class="card-emogi">
+                    <div class="card-emogi-back">❤️</div>
+                    </div>
+                            <div class="card-info">
+                                <span>즐거워요5</span>
+                                <span>2026년08월06일</span>
+                            </div>
+                            <div class="card-text">
+                            <span>오늘은 열공중!</span>
+
+                            </div>
+                    </div>
+
                 </div>
-                <div class="card">
-                <img class="card-img" src="../img_sample/img_3.png" alt="img_motion" width="100%">
-                    <div class="card-info">
-                        <span>제목</span>
-                        <span>날짜</span>
-                    </div>
-                <p>설명</p>
-                </div>
-                <div class="card">
-                <img class="card-img" src="../img_sample/img_3.png" alt="img_motion" width="100%">
-                    <div class="card-info">
-                        <span>제목</span>
-                        <span>날짜</span>
-                    </div>
-                <p>설명</p>
-                </div><div class="card">
-                <img class="card-img" src="../img_sample/img_3.png" alt="img_motion" width="100%">
-                    <div class="card-info">
-                        <span>제목</span>
-                        <span>날짜</span>
-                    </div>
-                <p>설명</p>
-                </div>
-                <div class="card">
-                <img class="card-img" src="../img_sample/img_3.png" alt="img_motion" width="100%">
-                    <div class="card-info">
-                        <span>제목</span>
-                        <span>날짜</span>
-                    </div>
-                <p>설명</p>
-                </div><div class="card">
-                <img class="card-img" src="../img_sample/img_3.png" alt="img_motion" width="100%">
-                    <div class="card-info">
-                        <span>제목</span>
-                        <span>날짜</span>
-                    </div>
-                <p>설명</p>
-                </div><div class="card">
-                <img class="card-img" src="../img_sample/img_3.png" alt="img_motion" width="100%">
-                    <div class="card-info">
-                        <span>제목</span>
-                        <span>날짜</span>
-                    </div>
-                <p>설명</p>
-                </div><div class="card">
-                <img class="card-img" src="../img_sample/img_3.png" alt="img_motion" width="100%">
-                    <div class="card-info">
-                        <span>제목</span>
-                        <span>날짜</span>
-                    </div>
-                <p>설명</p>
-                </div>
-                <div class="card">
-                <img class="card-img" src="../img_sample/img_3.png" alt="img_motion" width="100%">
-                    <div class="card-info">
-                        <span>제목</span>
-                        <span>날짜</span>
-                    </div>
-                <p>설명</p>
-                </div>
-                <div class="card">
-                <img class="card-img" src="../img_sample/img_3.png" alt="img_motion" width="100%">
-                    <div class="card-info">
-                        <span>제목</span>
-                        <span>날짜</span>
-                    </div>
-                <p>설명</p>
-                </div>
-                <div class="card">
-                <img class="card-img" src="../img_sample/img_3.png" alt="img_motion" width="100%">
-                    <div class="card-info">
-                        <span>제목</span>
-                        <span>날짜</span>
-                    </div>
-                <p>설명</p>
-                </div><div class="card">
-                <img class="card-img" src="../img_sample/img_3.png" alt="img_motion" width="100%">
-                    <div class="card-info">
-                        <span>제목</span>
-                        <span>날짜</span>
-                    </div>
-                <p>설명</p>
-                </div>
-                <div class="card">
-                <img class="card-img" src="../img_sample/img_3.png" alt="img_motion" width="100%">
-                    <div class="card-info">
-                        <span>제목</span>
-                        <span>날짜</span>
-                    </div>
-                <p>설명</p>
-                </div><div class="card">
-                <img class="card-img" src="../img_sample/img_3.png" alt="img_motion" width="100%">
-                    <div class="card-info">
-                        <span>제목</span>
-                        <span>날짜</span>
-                    </div>
-                <p>설명</p>
-                </div><div class="card">
-                <img class="card-img" src="../img_sample/img_3.png" alt="img_motion" width="100%">
-                    <div class="card-info">
-                        <span>제목</span>
-                        <span>날짜</span>
-                    </div>
-                <p>설명</p>
-                </div><div class="card">
-                <img class="card-img" src="../img_sample/img_3.png" alt="img_motion" width="100%">
-                    <div class="card-info">
-                        <span>제목</span>
-                        <span>날짜</span>
-                    </div>
-                <p>설명</p>
-                </div>
-                
             </div>
         </main>  
         <footer class="footer" width="100%">
