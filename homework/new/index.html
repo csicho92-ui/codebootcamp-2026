@@ -16,24 +16,37 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
             box-sizing:border-box;
             margin: 0;
 
-        }
+
+            }
+
         body {
             margin: 0;
-            padding: 0 px;        
+            padding: 0 px;    
+            font-size: 16px;    
         }
 
         .header {
             max-width: 1168px;
             margin: 0 auto;
-            padding: 5px;
+            padding: 20px;
 
-            height: 60px;
+            height: 78px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background-color: rgba(255, 255, 255, 0.75);
+            font-size: 24px;
+
+            /* 스크롤 스티키는 top 값을 지정해줘야 함 */
+            position: sticky;
+            top: 0;
+            
+            z-index: 10;
+            backdrop-filter: blur(10px);
+
         }
         .tab-list {
-            border-bottom: 2px solid black;
+           
             font-size: 1.5rem;
             list-style: none;
             display: flex;
@@ -43,6 +56,11 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
             padding: 5px;
 
         }
+        .tab-list div {
+            border-bottom: 3px solid black;
+            cursor: pointer; 
+            font-weight: bold;   }
+
         .toolbar {
             height: 60px;
             padding: 5px;
@@ -52,12 +70,47 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
             
         }
         .filter-group {
-            height: 60px;
+            height: 70px;
             display: flex;
             gap: 12px;
             align-items: center;
             
         }
+
+        .filter-select {
+            height: 43px;
+            width: 95px;
+            display: flex;
+            padding: 0 14px;
+            border-radius: 8px;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #dddddd;
+
+        } 
+        .search-input {
+            height: 43px;
+            width: 320px;
+            display: flex;
+            border-radius: 8px;
+            padding: 0 14px;
+            align-items: center;
+            justify-content: space-between;
+            background-color: white;
+            border: 1px solid #dddddd;
+        }
+
+        .write {
+            height: 43px;
+            width: 150px;
+            background-color: black;
+            color: white;
+            padding: 0 10px;
+            border-radius: 8px;
+            font-size: 18px;
+        }
+
+
         .main {
             max-width: 1168px;
             margin: 0 auto;
@@ -71,10 +124,11 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
         }
 
         .card {
-            height: 480px;
+            height: 400px;
             width: 360px;
             padding: 20px;
             border-radius: 24px;
+            position: relative;
         }
         .card-emogi-back {
             width: 180px;
@@ -83,17 +137,35 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
             border-radius: 50%;
             background-color: #fcfcfc;
             
+            
         }
         .card-emogi {  
             margin-bottom: 14px;
             text-align: center;
             font-size: 4rem;
             background-color: rgb(231, 231, 194);
+
             border-radius:  20px;
             height: 208px;
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+        .delete-card {
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            background-color: #fcfcfc;
+            border: 1px solid #dddddd;
+            border-radius: 50%;
+
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            line-height: 20px;
+
+
+
         }
         .card-info {
             display: flex;
@@ -116,17 +188,91 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
             align-items: center;
 
         }
-        .floating_button {
-            width: 50pt;
-            height: 50pt;
-            background-color: rgb(224, 110, 95);
-            border-radius: 100%;
+        .floating_button  {
+            width: 30pt;
+            height: 30pt;
+            background-color: rgb(255, 255, 255);
+            border-radius: 50%;
             cursor: pointer;
-
             position: fixed;
             right: 20px;
             bottom: 20px;
+            border: none;
+            outline: none; 
+            /* box-shadow:  [가로]  [세로]  [흐림]  [색상];
+              0px     4px     8px    rgba(0,0,0,0.15) */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
         }
+        .floating_button img { 
+            width: 16px;
+
+        }
+
+    
+        .modal-background {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.48);
+            position: fixed;
+/* position: fixed가 걸리는 순간, 그 요소는 "부모를 기준으로 삼는 것"을 그만두고, 브라우저 화면(뷰포트) 자체를 기준으로 함 */
+            top: 0; /* 화면의 맨 "위"에서부터 0px 떨어진 곳 */
+            left: 0; /* 화면의 맨 "왼쪽"에서부터 0px 떨어진 곳 */
+            /* 화면의 꼭지점에 붙여라! */
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+        }
+
+        .modal {
+            width: 640px;
+            height: 560px;
+            padding: 30px;
+            border-radius: 8px; 
+            background-color: #fcfcfc;
+            font-size: 24px;
+        }
+
+        .기분선택 {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 16px;
+            margin-top: 30px
+        }
+
+        .기분목록 {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .기분목록 label { 
+            font-size: 14px;
+        }
+
+        .일기내용 {
+            
+        }
+
+        .제목 {
+            width: 592px;
+            height: 48px;
+            font-size: 14px;
+            background-color: #dddddd;
+        }
+        .내용 {
+            width: 592px;
+            height: 128px;
+            font-size: 14px;
+            background-color: #dddddd;
+        }
+
+
+
+
         @media (max-width: 500px) {
             
             
@@ -150,10 +296,33 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
             .footer {
                 order: 1;
             }
+
+           
         }
 
     </style>
-</head>
+    <script>
+        function scrolltotop() {
+            window.scrollTo({top: 0, behavior: "smooth" })
+        }
+
+        function modalopen() {
+            document.getElementById("modal-background").style.display = "flex"
+        }
+
+         function modalclose() {
+            document.getElementById("modal-background").style.display = "none"
+        }
+
+    </script>
+
+
+</head> 
+
+
+
+
+
 <body>
     <header class="header"> 
             <!-- css에서 꾸밀때 "어떤요소를 꾸밀지"찾기위해 class에 네이밍을 하는 것 -->
@@ -182,19 +351,23 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
                 <div class="filter-group">
                 <select class="filter-select">
 			        <option disabled="true" selected="true">전체</option>
-                    <option>???</option>
-			        <option>???</option>
-			        <option>???</option>
+                    <option>행복</option>
+                    <option>슬픔</option>
+                    <option>놀람</option>
+			        <option>화남</option>
+			        <option>기타</option>
                 </select>
-                <input class ="search-input" type="text" placeholder="검색어를 입력해주세요.">
+                <input class ="search-input" type="text" placeholder="🔎 검색어를 입력해주세요.">
                 </div>
-                <button class="write-btn">+일기쓰기</button>
+                <button class="write" onclick="modalopen()">+일기쓰기</button>
             </div>
             
             <div class="diary-list">
                 <div class="card">
                     <div class="card-emogi">
-                    <div class="card-emogi-back">❤️</div>
+                    <div class="card-emogi-back">❤️
+                        <button class="delete-card">❌</button>
+                    </div>
                     </div>
                             <div class="card-info">
                                 <span>즐거워요1</span>
@@ -206,69 +379,43 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
                             </div>
                     </div>
 
-                    <div class="card">
-                    <div class="card-emogi">
-                    <div class="card-emogi-back">❤️</div>
-                    </div>
-                            <div class="card-info">
-                                <span>즐거워요2</span>
-                                <span>2026년08월06일</span>
-                            </div>
-                            <div class="card-text">
-                            <span>오늘은 열공중!</span>
-
-                            </div>
-                    </div>
-
-                    <div class="card">
-                    <div class="card-emogi">
-                    <div class="card-emogi-back">❤️</div>
-                    </div>
-                            <div class="card-info">
-                                <span>즐거워요3</span>
-                                <span>2026년08월06일</span>
-                            </div>
-                            <div class="card-text">
-                            <span>오늘은 열공중!</span>
-
-                            </div>
-                    </div>
-
-                     <div class="card">
-                    <div class="card-emogi">
-                    <div class="card-emogi-back">❤️</div>
-                    </div>
-                            <div class="card-info">
-                                <span>즐거워요4</span>
-                                <span>2026년08월06일</span>
-                            </div>
-                            <div class="card-text">
-                            <span>오늘은 열공중!</span>
-
-                            </div>
-                    </div>
-
-                     <div class="card">
-                    <div class="card-emogi">
-                    <div class="card-emogi-back">❤️</div>
-                    </div>
-                            <div class="card-info">
-                                <span>즐거워요5</span>
-                                <span>2026년08월06일</span>
-                            </div>
-                            <div class="card-text">
-                            <span>오늘은 열공중!</span>
-
-                            </div>
-                    </div>
-
                 </div>
             </div>
         </main>  
-        <footer class="footer" width="100%">
-        <div class="floating_button">
+        <footer class="footer">
+        <!-- <div class="floating_button"> -->
+            <button class="floating_button" onclick="scrolltotop()">
+            <img src="../new/Vector.png" alt="scrolltotop">
+            </button>
+        <!-- </div>     -->
 
-        </div>    
+        <div class="modal-background" id="modal-background">
+            <div class="modal" onclick="event.stopPropagation()">일기쓰기
+                <div class="기분선택" ><p>오늘 기분은 어땠나요?</p>
+                    <div class="기분목록">
+                        <label><input id="행복" type="radio" name="emotion" checked /> 행복해요</label>
+                        <label><input id="슬픔" type="radio" name="emotion" /> 슬퍼요</label>
+                        <label><input id="놀람" type="radio" name="emotion" /> 놀랐어요</label>
+                        <label><input id="화남" type="radio" name="emotion" /> 화나요</label>
+                        <label><input id="기타" type="radio" name="emotion" /> 기타</label>
+                    </div>
+                </div>
+
+                <div class="일기내용">
+                    <div class="입력라벨">제목</div>
+                    <textarea class="제목" id="제목" type="text" placeholder="제목을 입력해 주세요">제목</div>
+                </div> 
+
+                <div class="일기내용">
+                    <div class="입력라벨">내용</div>
+                    <textarea class="내용" id="내용" type="text" placeholder="내용을 입력해 주세요">내용</div>
+                </div>
+                
+                </div>
+            </div>
+        </div>
+
+
             
           <p>SOOIN 다이어리 </p>
           <p>대표 : 조수인 </p>
