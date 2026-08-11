@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>인접형제 결합자 실습 - 드롭다운 </title>
+    <style>
+        *{
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+        .드롭다운제목 {
+            appearance: none;
+            width: 150px;
+            height: 40px;
+            border: 2px solid pink;
+            border-radius: 10px;
+            padding: 10px;
+
+            --철수의css변수: "선택하세요~"
+        }
+
+        .드롭다운제목::after {
+            content: var(--철수의css변수);
+        }
+        .드롭다운제목:checked + ui {
+            display: block;
+        }
+
+        .드롭다운목록 {
+            display: none;
+            width: 150px;
+            border: 2px solid pink;
+            border-radius: 10PX;
+            overflow: hidden;
+        }
+
+        .드롭다운목록 input {
+            display: none;
+        }
+
+        .드롭다운목록 label {
+            display: block;
+            padding: 10px;
+        }
+
+        .드롭다운목록 label:hover {
+            background-color: blueviolet;
+        }
+    </style>
+    <script>
+        const 선택가능 = (event) => {
+            // 콘솔로그를 꼭 찍어보기
+            document.getElementById("드롭다운제목id").style = `--철수의css변수:"$(event.target.id)"`;
+            document.getElementById("드롭다운제목id").click() 
+
+        }
+    </script>
+
+</head>
+<body>
+    <input type="checkbox" class="드롭다운제목" id="드롭다운제목id">
+    <ui class="드롭다운목록">
+        <li>
+            <input type="radio" name="선택그룹" id="사과클릭"/>
+            <label for="사과클릭">사과</label>
+        </li>
+        <li>
+            <input type="radio" name="선택그룹" id="포도클릭"/>
+            <label for="포도클릭">포도</label>
+        </li>
+        <li>
+            <input type="radio" name="선택그룹" id="바나나클릭"/>
+            <label for="바나나클릭">바나나</label>
+        </li>
+
+
+
+
+    </ui>
+</body>
+</html>

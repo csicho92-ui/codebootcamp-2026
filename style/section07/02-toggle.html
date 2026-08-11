@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>가상클래스 선택자, 가상요소 선택자  </title>
+    <style>
+        .토글 {
+            /* 기본스타일 삭제  */
+            appearance: none; 
+            width: 40px;
+            height: 24px;
+            background-color: lightgray;
+            /* 둥근 모서리를 만들기 위해서 래디우스 */
+            border-radius: 20px;
+            /* 패딩을 주는 이유 -> 동그라미와 배경사이의 약간의 공간이 필요해서  */
+            padding: 2px;
+
+        }
+
+        .토글::after {
+            display: block;
+            content: "";
+            width: 20px;
+            height: 20px;
+            background-color: aliceblue;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .토글:checked {
+            background-color: limegreen; }
+
+        .토글:checked::after {
+            transform: translateX(calc(100% - 2px - 2px)); /* 체크되었을 때 원형 버튼을 오른쪽으로 이동 */
+        }
+    </style>
+
+
+
+</head>
+
+
+
+
+<body>
+    <input type="checkbox" class="토글">
+</body>
+</html>

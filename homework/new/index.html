@@ -253,21 +253,46 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
             font-size: 14px;
         }
 
-        .일기내용 {
-            
+        .배경-모달등룍완료 {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.48);
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 30;
+                
         }
+        .complete-modal {
+            width: 300px;
+            padding: 30px;
+            border-radius: 12px;
+            background-color: white;
+            text-align: center;
+}
 
         .제목 {
             width: 592px;
             height: 48px;
             font-size: 14px;
-            background-color: #dddddd;
+            color: rgb(167, 166, 162);
+            background-color: #f8f2f2;
+            border-radius: 8px; 
+            padding: 5px ;
+
         }
         .내용 {
             width: 592px;
             height: 128px;
             font-size: 14px;
-            background-color: #dddddd;
+            background-color: #f8f2f2;
+            color: rgb(167, 166, 162);
+            border-radius: 8px; 
+            padding: 5px ;
+
         }
 
 
@@ -312,6 +337,18 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
 
          function modalclose() {
             document.getElementById("modal-background").style.display = "none"
+        }
+        function 배경-모달등록완료() {
+            document.getElementById("complete-modal-background").style.display = "flex"
+        }
+
+        function 완료모달닫기() {
+            document.getElementById("complete-modal-background").style.display = "none"
+            document.getElementById("modal-background").style.display = "none"
+        }
+        function 일기등록하기() {
+            document.getElementById("modal-background").style.display = "none"
+            완료모달열기()
         }
 
     </script>
@@ -382,6 +419,7 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
                 </div>
             </div>
         </main>  
+
         <footer class="footer">
         <!-- <div class="floating_button"> -->
             <button class="floating_button" onclick="scrolltotop()">
@@ -399,25 +437,49 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
                         <label><input id="화남" type="radio" name="emotion" /> 화나요</label>
                         <label><input id="기타" type="radio" name="emotion" /> 기타</label>
                     </div>
+
+                    <div class="배경-모달등룍완료" id="배경-모달등록완료"> 
+                        <div class="모달완료">모달등룍이 완료되었습니다.
+                            <p>모달등룍이 완료되었습니다.</p>
+                            <button onclick="modalclose()">
+                                확인
+                            </button>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="일기상세"> 
+
                 </div>
 
                 <div class="일기내용">
                     <div class="입력라벨">제목</div>
-                    <textarea class="제목" id="제목" type="text" placeholder="제목을 입력해 주세요">제목</div>
+                    <textarea class="제목" id="제목" placeholder="제목을 입력해 주세요">제목</textarea>
                 </div> 
 
                 <div class="일기내용">
                     <div class="입력라벨">내용</div>
-                    <textarea class="내용" id="내용" type="text" placeholder="내용을 입력해 주세요">내용</div>
+                    <textarea class="내용" id="내용" placeholder="내용을 입력해 주세요">내용</textarea>
                 </div>
                 
+                <div class="modal-button"> 
+                    <button class="modalclose" onclick="modalclose()">닫기</button>
+                    <button class="등록하기" id="등록하기" onclick="일기등록하기()" disabled>등록하기</button>
+
                 </div>
+
+
+
+                
             </div>
         </div>
 
 
-            
-          <p>SOOIN 다이어리 </p>
+     
+          <p>수인의 다이어리 </p>
           <p>대표 : 조수인 </p>
           <p>Copyright © 2026.</p>
         </footer>  
