@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>수인이의 감정일기</title>
+<style>
+    /* 부모 상자 ┌──────────────────────┐
+
+flex-start     [A][B][C]···········   ← 왼쪽에 몰기
+flex-end       ···········[A][B][C]   ← 오른쪽에 몰기
+center         ·····[A][B][C]·····   ← 가운데
+space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 벌리기 */
+
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+    }
+
+    html {
+        font-size: 16px;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-size: 16px;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+        font-family: inherit;
+    }
+
+    .darkmode-make {
+        color: white;
+        background-color: black;
+    }
+
+    .darkmode-make .header {
+        background-color: #222222;
+    }
+
+    .darkmode-make .search-input {
+        background-color: #222222;
+        color: #eee;
+    }
+
+    .darkmode-make .filter-select {
+        background-color: #222222;
+        color: #eee;
+    }
+
+    .darkmode-make .filter-list {
+        background-color: #222222;
+        border-color: #555555;
+    }
+
+    .darkmode-make .filter-list label:hover,
+    .darkmode-make .filter-list input:checked + label {
+        background-color: #444444;
+    }
+
+    .darkmode-make .write {
+        background-color: #f8f6f6;
+        color: #111111;
+    }
+
+    .darkmode-make .footer {
+        background-color: #111111;
+    }
+
+    .darkmode-make .modal {
+        background-color: #111111;
+    }
+
+    .darkmode-make .complete-modal {
+        background-color: #111111;
+    }
+
+    .darkmode-make .complete-modal button {
+        background-color: #f8f6f6;
+        color: #111111;
+    }
+
+    .darkmode-make .tab.active {
+        color: #eee;
+        border-bottom: #666464 solid 3px;
+
+
+    }
+
+    .darkmode-make .tab {
+        color: #666464;
+    }
+
+
+    .header {
+        max-width: 1168px;
+        margin: 0 auto;
+        padding: 20px;
+
+        height: 78px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.75);
+        font-size: 24px;
+
+        /* 스크롤 스티키는 top 값을 지정해줘야 함 */
+        position: sticky;
+        top: 0;
+
+        z-index: 10;
+        backdrop-filter: blur(10px);
+    }
+
+    .로고 {
+        font-size: 1.125rem;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .toggle-switch {
+        appearance: none;
+        width: 40px;
+        height: 24px;
+        background-color: lightgray;
+        border-radius: 20px;
+        padding: 2px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .다크모드 {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        font-size: 14px;
+    }
+
+    .toggle-switch::after {
+        display: block;
+        content: "";
+        width: 20px;
+        height: 20px;
+        background-color: aliceblue;
+        border-radius: 50%;
+        transition: transform 0.3s ease;
+    }
+
+    .toggle-switch:checked {
+        background-color: rgb(135, 222, 154)
+    }
+
+    .toggle-switch:checked::after {
+        transform: translateX(calc(100% - 2px - 2px));
+    }
+
+
+    .tab-list {
+        font-size: 1.5rem;
+        list-style: none;
+        display: flex;
+        justify-content: flex-start;
+        gap: 24px;
+        padding: 5px;
+    }
+
+    .tab-list div {
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 18px;
+
+    }
+
+    .tab {
+        color: #afafaf
+    }
+
+    .tab.active {
+        color: #2c2b2b;
+        border-bottom: #2c2b2b solid 3px;
+    }
+
+    .toolbar {
+        height: 60px;
+        padding: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .filter-group {
+        height: 70px;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        position: relative;
+    }
+
+    .filter-box {
+        width: 95px;
+        position: relative;
+    }
+
+    #비율드롭다운 {
+        --선택한필터: "1:1";
+    }
+
+    .filter-select {
+        --선택한필터: "전체";
+        appearance: none;
+        background-image: url(/homework/new/Vector\ \(1\).png);
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        background-color: white;
+        height: 43px;
+        width: 95px;
+        margin: 0;
+        padding: 0 14px;
+        border-radius: 8px;
+        border: 2px solid #dddddd;
+        font-size: 15px;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .filter-select:hover {
+        border-color: palevioletred;
+    }
+
+    .filter-select::after {
+        content: var(--선택한필터);
+        display: block;
+        line-height: 39px;
+    }
+
+    .filter-select:checked + .filter-list {
+        display: block;
+    }
+
+    .filter-list {
+        width: 130px;
+        margin: 0;
+        padding: 6px;
+        border: 2px solid #dddddd;
+        border-radius: 10px;
+        background-color: white;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        list-style: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        z-index: 5;
+        display: none;
+        top: 51px;
+    }
+
+    .filter-list input {
+        display: none;
+    }
+
+    .filter-list label {
+        padding: 10px;
+        border-radius: 7px;
+        display: block;
+        cursor: pointer;
+        font-size: 15px;
+    }
+
+    .filter-list label:hover,
+    .filter-list input:checked + label {
+        background-color: #f1f1f1;
+    }
+
+    .search-input {
+        height: 43px;
+        width: 320px;
+        border-radius: 8px;
+        padding: 0 14px;
+        background-color: white;
+        border: 2px solid #dddddd;
+        font-size: 15px;
+    }
+
+    .write {
+        height: 43px;
+        width: 150px;
+        font-weight: bold;
+        padding: 0 10px;
+        border-radius: 8px;
+        background-color: black;
+        color: white;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .main {
+        max-width: 1168px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .diary-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .card {
+        height: 400px;
+        width: 360px;
+        padding: 20px;
+        border-radius: 24px;
+        position: relative;
+    }
+
+    .card-emogi-back {
+        width: 180px;
+        height: 180px;
+        padding: 45px;
+        border-radius: 50%;
+        background-color: #fcfcfc;
+    }
+
+    .card-emogi {
+        margin-bottom: 14px;
+        text-align: center;
+        font-size: 4rem;
+        background-color: rgb(231, 231, 194);
+
+        border-radius: 20px;
+        height: 208px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .delete-card {
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        background-color: #fcfcfc;
+        border: 1px solid #dddddd;
+        border-radius: 50%;
+
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    .card-info {
+        display: flex;
+        border-radius: 24px;
+        justify-content: space-between;
+    }
+
+    .card-text {
+        display: flex;
+        font-size: 1.5rem;
+    }
+
+    .footer {
+        height: 60px;
+        max-width: 1168px;
+        margin: 0 auto;
+        background-color: rgb(236, 229, 212);
+        padding: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .floating_button {
+        width: 30pt;
+        height: 30pt;
+        background-color: rgb(255, 255, 255);
+        border-radius: 50%;
+        cursor: pointer;
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        border: none;
+        outline: none;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .floating_button img {
+        width: 16px;
+    }
+
+
+    .modal-background {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.48);
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 20;
+    }
+
+    .modal {
+        width: 640px;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 30px;
+        border-radius: 8px;
+        background-color: #fcfcfc;
+        font-size: 24px;
+    }
+
+    .기분선택 {
+        display: flex;
+        gap: 5px;
+        flex-direction: column;
+        font-size: 16px;
+        margin-top: 15px
+    }
+
+    .기분목록 {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+    }
+
+    .기분목록 label {
+        font-size: 14px;
+    }
+
+    /* 중첩 모달(등록 완료) - modal-background 밖, 형제로 위치 */
+    .complete-modal-background {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.48);
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 30;
+    }
+
+    .complete-modal {
+        width: 300px;
+        padding: 30px;
+        border-radius: 12px;
+        background-color: white;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .complete-modal p {
+        margin-bottom: 20px;
+    }
+
+    .complete-modal button {
+        width: 100%;
+        height: 43px;
+        background-color: black;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .일기내용 {
+        margin-top: 16px;
+    }
+
+    .입력라벨 {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .제목 {
+        width: 100%;
+        height: 48px;
+        font-size: 14px;
+        color: rgb(80, 80, 80);
+        background-color: #f8f2f2;
+        border: none;
+        border-radius: 8px;
+        padding: 12px;
+        resize: none;
+    }
+
+    .내용 {
+        width: 100%;
+        height: 128px;
+        font-size: 14px;
+        background-color: #f8f2f2;
+        color: rgb(80, 80, 80);
+        border: none;
+        border-radius: 8px;
+        padding: 12px;
+        resize: none;
+    }
+
+    .modal-button {
+        display: flex;
+        gap: 14px;
+        justify-content: center;
+        margin-top: 24px;
+    }
+
+    .modal-button button {
+        width: 104px;
+        height: 48px;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .modalclose {
+        border: 1px solid #222222;
+        background-color: white;
+    }
+
+    .등록하기 {
+        border: 0;
+        background-color: #111111;
+        color: white;
+    }
+
+    .등록하기:disabled {
+        background-color: #cccccc;
+        cursor: default;
+    }
+
+    .dog-img {
+        width: 50%;
+        object-fit: cover;
+        border-radius: 8px;
+        margin: 0 auto; /*좌우 여백을 똑같이 나눠줌*/
+    }
+
+    .ratio-1-1 {
+        aspect-ratio: 1 / 1;
+    }
+
+    .ratio-4-3 {
+        aspect-ratio: 4 / 3;
+    }
+
+    .ratio-3-4 {
+        aspect-ratio: 3 / 4;
+    }
+
+    .사진리스트 {
+        width: 100%;
+        display: grid;
+        /* grid에서는  justify-items를 사용  */
+        justify-items: center;
+        gap: 20px;
+        border-radius: 15px;
+        grid-template-columns: 1fr;
+    }
+
+
+    .skeleton {
+        background: linear-gradient(90deg, #eee 25%, #ddd 50%, #eee 75%);
+        background-size: 200% 100%;
+        animation: skeleton-loading 1.2s infinite;
+    }
+
+
+    @keyframes skeleton-loading {
+        from {
+            background-position: 200% 0;
+        }
+
+        to {
+            background-position: -200% 0;
+        }
+    }
+
+    @media (max-width: 500px) {
+
+        .card-emogi {
+            height: 120px;
+        }
+
+        .card-emogi-back {
+            width: 120px;
+            height: 120px;
+        }
+
+        .card {
+            height: 120px;
+            width: 100%;
+        }
+
+        .diary-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            order: 1;
+        }
+
+        .footer {
+            order: 1;
+        }
+
+        .modal {
+            width: 90%;
+        }
+
+        .사진리스트 {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+</style>
+<script>
+    const darkmord = () => {
+        document.body.classList.toggle("darkmode-make")
+    }
+    function scrolltotop() {
+        window.scrollTo({ top: 0, behavior: "smooth" })
+    }
+
+    function modalopen() {
+        document.getElementById("modal-background").style.display = "flex"
+        // 모달 열릴 때 맨 위로 스크롤 + 배경 스크롤 막기
+        window.scrollTo({ top: 0, behavior: "smooth" })
+        document.body.style.overflow = "hidden"
+    }
+
+    function modalclose() {
+        document.getElementById("modal-background").style.display = "none"
+        document.body.style.overflow = "auto"
+    }
+
+    // 중첩 모달(등록 완료) 열기/닫기
+    function 완료모달열기() {
+        document.getElementById("complete-modal-background").style.display = "flex"
+    }
+
+    function 완료모달닫기() {
+        document.getElementById("complete-modal-background").style.display = "none"
+        document.getElementById("modal-background").style.display = "none"
+        document.body.style.overflow = "auto"
+    }
+
+    function 일기등록하기() {
+        document.getElementById("modal-background").style.display = "none"
+        완료모달열기()
+    }
+
+    // 제목/내용 입력 여부에 따라 등록 버튼 활성화
+    function 등록버튼확인하기() {
+        const 제목 = document.getElementById("제목").value
+        const 내용 = document.getElementById("내용").value
+        document.getElementById("등록하기버튼").disabled = (제목 === "" || 내용 === "")
+    }
+
+    // ESC 키로 모달 닫기 (등록 완료 모달이 열려있으면 그것부터 닫기)
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+            const 완료모달 = document.getElementById("complete-modal-background")
+            if (완료모달.style.display === "flex") {
+                완료모달닫기()
+            } else {
+                modalclose()
+            }
+        }
+    })
+
+    //탭 부분 선택에 대한 부분
+    function 탭이동(탭) {
+        const 다이어리인지 = (탭 === '다이어리')
+
+        document.getElementById("다이어리영역").style.display = 다이어리인지 ? "block" : "none"
+        document.getElementById("사진영역").style.display = 다이어리인지 ? "none" : "block"
+
+        document.getElementById("감정필터박스").style.display = 다이어리인지 ? "block" : "none"
+        document.getElementById("비율필터박스").style.display = 다이어리인지 ? "none" : "block"
+        document.getElementById("검색창").style.display = 다이어리인지 ? "block" : "none"
+
+        if (!다이어리인지) { 강아지사진불러오기() }
+        탭선택(탭)
+        }   
+
+        let 선택한비율 = "ratio-1-1"
+
+        function 비율바꾸기(event) {
+            const 비율 = event.target.value
+            const 비율클래스 = { "1:1": "ratio-1-1", "4:3": "ratio-4-3", "3:4": "ratio-3-4" }[비율]
+
+            선택한비율 = 비율클래스
+            document.getElementById("비율드롭다운").style = `--선택한필터: "${비율}"`
+            document.getElementById("비율드롭다운").click()
+            비율변경(비율클래스)
+        }
+
+        function 비율변경(비율필터) {
+            const 이미지들 = document.querySelectorAll('.dog-img')
+            이미지들.forEach(img => {
+                img.classList.remove('ratio-1-1', 'ratio-4-3', 'ratio-3-4')
+                img.classList.add(비율필터)
+            })
+        }    
+
+    function 탭선택(탭) {
+        if (탭 === '다이어리') {
+            document.getElementById("다이어리탭").classList.add("active")
+            document.getElementById("사진탭").classList.remove("active")
+        } else {
+            document.getElementById("사진탭").classList.add("active")
+            document.getElementById("다이어리탭").classList.remove("active")
+        }
+    }
+
+    let 일기목록 = [
+        { 번호:1, 감정:"행복", 이모지: "😊", 날짜: "2026년08월06일", 제목: "오늘은 열공중!"}
+    ]
+
+    function 카드한개만들기(일기) {
+        return ` 
+        <div class="card" data-감정="${일기.감정}">
+            <div class="card-emogi">
+                <div class="card-emogi-back">${일기.이모지}
+                    <button class="delete-card" onclick="일기삭제하기(${일기.번호})">❌</button>
+                </div>
+            </div>
+
+            <div class="card-info">
+                <span>${일기.감정}</span>
+                <span>${일기.날짜}</span>
+            </div>
+            <div class="card-text">
+                <span>${일기.제목}</span>
+            </div>
+        </div>
+    `
+}
+
+        function 일기삭제하기(번호) {
+        일기목록 = 일기목록.filter(일기 => 일기.번호 !== 번호)
+        필터적용하기()
+    }
+
+    window.onload = function () {
+        필터적용하기()
+    }
+
+    function 일기목록그리기(보여줄목록) {
+        document.getElementById("일기목록").innerHTML =
+            보여줄목록.map(일기 => 카드한개만들기(일기)).join("")
+    }
+
+
+
+    // 감정 필터와 검색어를 한 곳에서 같이 판단함
+    let 타이머 = null
+    let 선택한감정 = "전체"
+    let 입력한검색어 = ""
+
+    function 필터적용하기() {
+        const 검색결과 = 일기목록.filter(일기 => {
+        const 감정이맞는지 = 선택한감정 === "전체" || 일기.감정 === 선택한감정
+        const 제목이맞는지 = 일기.제목.includes(입력한검색어)
+        return 감정이맞는지 && 제목이맞는지
+        })
+
+        일기목록그리기(검색결과)
+
+            }
+
+    function 감정바꾸기(event) {
+        선택한감정 = event.target.value
+        document.getElementById("필터드롭다운").style = `--선택한필터: "${선택한감정}"`
+        document.getElementById("필터드롭다운").click()
+        필터적용하기()
+    }
+
+    //검색기능에 타이머 넣기
+    function 검색기능(event) {
+        const 검색어 = event.target.value
+        clearTimeout(타이머)
+
+        타이머 = setTimeout(() => {
+            입력한검색어 = 검색어
+            필터적용하기()
+        }, 700)
+    }
+
+
+    function 강아지사진불러오기() {
+        fetch('https://dog.ceo/api/breeds/image/random/10')
+            .then(응답 => {
+                if (!응답.ok) throw new Error('불러오기 실패')
+                return 응답.json()
+            })
+            .then(결과 => {
+                const 이미지주소들 = 결과.message
+                document.getElementById('사진목록').innerHTML += 이미지주소들.map(주소 => `
+                <img class="dog-img ${선택한비율} skeleton" src="${주소}" onload="this.classList.remove('skeleton')">
+                `).join('')
+            })
+            .catch(에러 => console.error(에러))
+    }
+
+    let 스크롤타이머 = null
+    window.addEventListener('scroll', () => {
+        if (스크롤타이머 !== null) return
+
+        스크롤타이머 = setTimeout(() => {
+            스크롤타이머 = null
+        }, 700)
+
+        if (document.getElementById('사진영역').style.display === 'none') return
+
+        const 스크롤퍼센트 = window.scrollY / (document.body.scrollHeight - window.innerHeight)
+
+        if (스크롤퍼센트 >= 0.7) {
+            강아지사진불러오기()
+        }
+    })
+</script>
+</head>
+
+
+<body>
+
+<header class="header">
+    <!-- css에서 꾸밀때 "어떤요소를 꾸밀지"찾기위해 class에 네이밍을 하는 것 -->
+    <div class="로고">
+        <p>수인이의 다이어리</p>
+    </div>
+
+    <div class="다크모드">
+        <span>다크모드</span>
+        <input type="checkbox" id="switch" class="toggle-switch" onclick="darkmord()" />
+    </div>
+</header>
+
+<main class="main">
+    <!-- src이미지의 주소 / alt 이미지를 설명하는 것  -->
+    <!-- width="100%"-> 어떤이미지든 부모이미지보다 커지지 말아라 -->
+    <img class="cover-img" src="../img_sample/img_1.png" alt="img_sample" width="100%">
+
+    <div class="tab-list">
+        <div class="tab active" id="다이어리탭" onclick="탭이동('다이어리')">일기보관함</div>
+        <div class="tab" id="사진탭" onclick="탭이동('사진')">사진보관함</div>
+    </div>
+
+    <div class="toolbar">
+        <div class="filter-group">
+                <div class="filter-box" id="감정필터박스">
+                    <input class="filter-select" id="필터드롭다운" type="checkbox" />
+                    <ul class="filter-list">
+                        <li><input id="전체필터" type="radio" name="감정필터" value="전체" onclick="감정바꾸기(event)" checked /><label for="전체필터">전체</label></li>
+                        <li><input id="행복필터" type="radio" name="감정필터" value="행복" onclick="감정바꾸기(event)" /><label for="행복필터">행복</label></li>
+                        <li><input id="슬픔필터" type="radio" name="감정필터" value="슬픔" onclick="감정바꾸기(event)" /><label for="슬픔필터">슬픔</label></li>
+                        <li><input id="놀람필터" type="radio" name="감정필터" value="놀람" onclick="감정바꾸기(event)" /><label for="놀람필터">놀람</label></li>
+                        <li><input id="화남필터" type="radio" name="감정필터" value="화남" onclick="감정바꾸기(event)" /><label for="화남필터">화남</label></li>
+                        <li><input id="기타필터" type="radio" name="감정필터" value="기타" onclick="감정바꾸기(event)" /><label for="기타필터">기타</label></li>
+                    </ul>
+                </div>
+
+                <div class="filter-box" id="비율필터박스" style="display:none;">
+                    <input class="filter-select" id="비율드롭다운" type="checkbox" />
+                    <ul class="filter-list">
+                        <li><input id="비율1대1" type="radio" name="비율필터" value="1:1" onclick="비율바꾸기(event)" checked /><label for="비율1대1">1:1</label></li>
+                        <li><input id="비율4대3" type="radio" name="비율필터" value="4:3" onclick="비율바꾸기(event)" /><label for="비율4대3">4:3</label></li>
+                        <li><input id="비율3대4" type="radio" name="비율필터" value="3:4" onclick="비율바꾸기(event)" /><label for="비율3대4">3:4</label></li>
+                    </ul>
+                </div>
+
+                <input class="search-input" id="검색창" type="text" placeholder="🔎 검색어를 입력해주세요." oninput="검색기능(event)">
+                </div>
+
+
+        <button class="write" onclick="modalopen()">+일기쓰기</button>
+    </div>
+
+
+    <div class="콘텐츠영역" id="다이어리영역">
+        <div class="diary-list" id="일기목록"></div>
+        
+    </div>
+
+    <div class="콘텐츠영역" id="사진영역" style="display:none;">
+        <div class="비율필터"></div>
+        <div class="사진리스트" id="사진목록"></div>
+    </div>
+</main>
+
+<footer class="footer">
+    <button class="floating_button" onclick="scrolltotop()">
+        <img src="../new/Vector.png" alt="scrolltotop">
+    </button>
+
+    <!-- 1. 일기 등록 모달 -->
+    <div class="modal-background" id="modal-background" onclick="modalclose()">
+        <div class="modal" onclick="event.stopPropagation()">
+            일기쓰기
+            <div class="기분선택">
+                <p>오늘 기분은 어땠나요?</p>
+                <div class="기분목록">
+                    <label><input id="행복" type="radio" name="emotion" checked /> 행복해요</label>
+                    <label><input id="슬픔" type="radio" name="emotion" /> 슬퍼요</label>
+                    <label><input id="놀람" type="radio" name="emotion" /> 놀랐어요</label>
+                    <label><input id="화남" type="radio" name="emotion" /> 화나요</label>
+                    <label><input id="기타" type="radio" name="emotion" /> 기타</label>
+                </div>
+            </div>
+
+            <div class="일기내용">
+                <div class="입력라벨">제목</div>
+                <textarea class="제목" id="제목" placeholder="제목을 입력해 주세요" oninput="등록버튼확인하기()"></textarea>
+            </div>
+
+            <div class="일기내용">
+                <div class="입력라벨">내용</div>
+                <textarea class="내용" id="내용" placeholder="내용을 입력해 주세요" oninput="등록버튼확인하기()"></textarea>
+            </div>
+
+            <div class="modal-button">
+                <button class="modalclose" onclick="modalclose()">닫기</button>
+                <button class="등록하기" id="등록하기버튼" onclick="일기등록하기()" disabled>등록하기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. 등록 완료 중첩 모달 : 위 모달 위에 겹쳐서 뜸 -->
+    <div class="complete-modal-background" id="complete-modal-background">
+        <div class="complete-modal">
+            <p>등록이 완료되었습니다.</p>
+            <button onclick="완료모달닫기()">확인</button>
+        </div>
+    </div>
+
+    <p>수인의 다이어리 </p>
+    <p>대표 : 조수인 </p>
+    <p>Copyright © 2026.</p>
+</footer>
+</body>
+
+</html>

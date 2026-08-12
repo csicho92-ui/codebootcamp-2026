@@ -34,6 +34,19 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
         .darkmode-make .header {
             background-color: #222222;
         }
+        .darkmode-make .search-input {
+            background-color: #222222;
+        }
+        .darkmode-make .filter-select {
+            background-color: #222222;
+            color: #eee;
+        }
+
+
+        .darkmode-make .write {
+            background-color: #f8f6f6;
+            color: #111111;
+        }
 
         .darkmode-make .footer {
             background-color: #111111;
@@ -83,6 +96,14 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
 
         }
 
+        .로고 {
+            font-size: 1.125rem;
+            font-weight: bold;
+            cursor: pointer;
+            
+
+        }
+
         .toggle-switch {
             appearance: none;
             width: 40px;
@@ -92,7 +113,13 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
             padding: 2px;
             font-size: 14px;
             
+        }
 
+        .다크모드 {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-size: 14px;
         }
 
         .toggle-switch::after {
@@ -115,7 +142,6 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
 
 
         .tab-list {
-
             font-size: 1.5rem;
             list-style: none;
             display: flex;
@@ -157,6 +183,7 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
 
         }
 
+
         .filter-select {
             appearance: none;
             background-image: url(/homework/new/Vector\ \(1\).png);
@@ -171,11 +198,8 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
             border: 2px solid #dddddd;
 
         }
-        .filter-select:hover {
-            border-color: palevioletred;
-        }
 
-
+     
         .search-input {
             height: 43px;
             width: 320px;
@@ -191,13 +215,14 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
         .write {
             height: 43px;
             width: 150px;
-            background-color: black;
-            color: white;
             padding: 0 10px;
             border-radius: 8px;
+            background-color: black;
+            color: white;
+        }
+        .일기쓰기 {
             font-size: 18px;
         }
-
 
         .main {
             max-width: 1168px;
@@ -689,16 +714,17 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
 
 <body>
 
-    <header class="header">
+    <header div class="header">
         <!-- css에서 꾸밀때 "어떤요소를 꾸밀지"찾기위해 class에 네이밍을 하는 것 -->
-        <p>수인의 다이어리</p>
-        <!-- 토글스위치 -->
-        <div>
-            <!-- <input type="checkbox" onclick="darkmord()" />다크모드 -->
-            <input type="checkbox" id="switch" class="toggle-switch" onclick="darkmord()" />다크모드
-            <div></div>
-
+        <div class="로고">
+                <p>수인이의 다이어리</p>
         </div>
+        
+        <div class="다크모드">
+            <span>다크모드</span>
+            <input type="checkbox" id="switch" class="toggle-switch" onclick="darkmord()" />
+        </div>
+        
     </header>
 
     <main class="main">
@@ -726,7 +752,10 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
             </div>
             
 
-            <button class="write" onclick="modalopen()">+일기쓰기</button>
+            <button class="write" onclick="modalopen()">
+                <div class="일기쓰기"></div>
+                <span>+일기쓰기</span>    
+            </button>
         </div>
 
 
@@ -750,7 +779,7 @@ space-between  [A]·····[B]·····[C]   ← 양 끝에 붙이고 사이 �
 
             </div>
         </div>
-        </div>
+        
         <div class="콘텐츠영역" id="사진영역" style="display:none;">
             <div class="비율필터">
                 <button onclick="비율변경('ratio-1-1')">1:1</button>

@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>지용이의 뭔가 슬픈 다이어리</title>
+    <title>지용이의 뭔가 슬픈 다이어리 상세페이지</title>
     <style>
-        /* 모든 태그의 크기를 계산하기 쉽게 만들어요. */
         * {
             box-sizing: border-box;
         }
@@ -21,9 +20,7 @@
         }
 
         button,
-        input,
-        select,
-        textarea {
+        input {
             font-family: Arial, "Apple SD Gothic Neo", sans-serif;
         }
 
@@ -34,10 +31,10 @@
         .페이지 {
             width: 100%;
             max-width: 1168px;
+            min-height: 100vh;
             margin: 0 auto;
         }
 
-        /* 상단 영역이에요. */
         .상단 {
             height: 78px;
             display: flex;
@@ -53,6 +50,11 @@
         .로고 {
             font-size: 1.125rem;
             font-weight: bold;
+            cursor: pointer;
+        }
+
+        .모바일상세제목 {
+            display: none;
         }
 
         .다크모드 {
@@ -78,298 +80,142 @@
             background-color: white;
         }
 
-        /* 동영상 배경도 만들수 있어요. */
-        .배너 {
-            width: 100%;
-            height: 246px;
-            border-radius: 24px;
-            background-color: #f3f0e8;
-            overflow: hidden;
+        .상세영역 {
+            margin-top: 62px;
         }
 
-        .배너비디오 {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* 탭과 검색 영역이에요. */
-        .탭 {
-            height: 82px;
-            display: flex;
-            gap: 30px;
-            align-items: flex-end;
-        }
-
-        .탭버튼 {
-            padding: 0 8px 12px 8px;
-            color: #aaaaaa;
-            font-size: 1.375rem;
+        .상세제목 {
+            padding-bottom: 14px;
+            border-bottom: 2px solid #111111;
+            font-size: 1.5rem;
             font-weight: bold;
-            cursor: pointer;
         }
 
-        .선택된탭 {
-            color: #111111;
-            border-bottom: 3px solid #111111;
-        }
-
-        .검색영역 {
-            height: 94px;
+        .일기정보 {
+            height: 58px;
             display: flex;
-            gap: 14px;
             align-items: center;
             justify-content: space-between;
         }
 
-        .감정선택 {
-            width: 120px;
-            height: 48px;
-            padding: 0 14px;
-            border: 1px solid #dddddd;
-            border-radius: 9px;
+        .감정정보 {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .감정이모지 {
+            font-size: 28px;
+        }
+
+        .감정글씨 {
+            color: #ff5b5b;
+            font-size: 1.125rem;
+            font-weight: bold;
+        }
+
+        .작성일 {
+            color: #999999;
+            font-size: 14px;
+        }
+
+        .내용제목 {
+            margin-top: 10px;
+            margin-bottom: 16px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .일기내용 {
+            min-height: 128px;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .복사영역 {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .복사버튼 {
+            border: 0;
             background-color: white;
-            font-size: 15px;
+            font-size: 14px;
         }
 
-        .검색창 {
-            width: 320px;
-            height: 48px;
-            padding: 0 18px;
+        .관리버튼영역 {
+            margin-top: 20px;
+            margin-bottom: 16px;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .관리버튼 {
+            height: 40px;
+            padding: 0 15px;
             border: 1px solid #dddddd;
-            border-radius: 24px;
-            font-size: 15px;
+            border-radius: 8px;
+            background-color: white;
+            font-size: 14px;
         }
 
-        .글쓰기버튼 {
+        .회고영역 {
+            padding-top: 24px;
+            border-top: 1px solid #777777;
+        }
+
+        .회고제목 {
+            margin-bottom: 18px;
+            font-size: 1.125rem;
+            font-weight: bold;
+        }
+
+        .회고입력영역 {
+            display: flex;
+            gap: 14px;
+        }
+
+        .회고입력 {
             height: 48px;
-            margin-left: auto;
-            padding: 0 20px;
+            padding: 0 16px;
+            border: 1px solid #dddddd;
+            border-radius: 8px;
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .회고등록버튼 {
+            width: 60px;
+            height: 48px;
             border: 0;
             border-radius: 8px;
             background-color: #111111;
             color: white;
-            font-size: 16px;
+            font-size: 14px;
+            font-weight: bold;
         }
 
-        /* 일기 카드 영역이에요. */
-        .일기목록 {
-            display: flex;
-            gap: 36px 24px;
-            flex-wrap: wrap;
-            justify-content: center;
-            min-height: 400px;
+        .회고목록 {
+            margin-top: 18px;
         }
 
-        .카드 {
-            width: 274px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .카드:hover {
-            transform: scale(1.03);
-        }
-
-        .사진상자 {
-            width: 274px;
-            height: 206px;
-            border-radius: 16px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .행복배경 {
-            background-color: #ffe0e0;
-        }
-
-        .슬픔배경 {
-            background-color: #dcf8fb;
-        }
-
-        .놀람배경 {
-            background-color: #fff6d8;
-        }
-
-        .화남배경 {
-            background-color: #e2e2e2;
-        }
-
-        .기타배경 {
-            background-color: #ead3fa;
-        }
-
-        .이모지원 {
-            width: 148px;
-            height: 148px;
-            border-radius: 50%;
-            background-color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 78px;
-        }
-
-        .삭제버튼 {
-            width: 25px;
-            height: 25px;
-            padding: 0;
-            border: 1px solid #dddddd;
-            border-radius: 50%;
-            background-color: white;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 17px;
-            line-height: 20px;
-        }
-
-        .카드정보 {
-            margin-top: 16px;
-            display: flex;
-            justify-content: space-between;
+        .회고한개 {
+            padding: 16px 0;
+            border-bottom: 1px solid #eeeeee;
             font-size: 14px;
         }
 
-        .날짜 {
+        .회고날짜 {
+            margin-left: 12px;
             color: #999999;
         }
 
-        .행복글씨 {
-            color: #ff5b5b;
-        }
-
-        .슬픔글씨 {
-            color: #29b6d6;
-        }
-
-        .놀람글씨 {
-            color: #dd9d20;
-        }
-
-        .화남글씨 {
-            color: #777777;
-        }
-
-        .기타글씨 {
-            color: #b252df;
-        }
-
-        .카드제목 {
-            margin-top: 12px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            font-size: 1.0625rem;
-            font-weight: bold;
-        }
-
-        .결과없음 {
-            width: 100%;
-            padding: 100px 0;
-            color: #999999;
-            text-align: center;
-        }
-
-        /* 사진보관함은 처음에는 숨겨 두어요. */
-        .사진메뉴 {
-            display: none;
-            min-height: 400px;
-        }
-
-        .사진도구 {
-            height: 72px;
-            display: flex;
-            align-items: center;
-        }
-
-        .비율선택 {
-            width: 120px;
-            height: 42px;
-            padding: 0 12px;
-            border: 1px solid #dddddd;
-            border-radius: 8px;
-            background-color: white;
-        }
-
-        .강아지사진목록 {
-            width: 500px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
-        /* 사진이 도착하기 전에는 움직이는 그라데이션이 보여요. */
-        .강아지사진상자 {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            border-radius: 16px;
-            overflow: hidden;
-            background: linear-gradient(90deg, #eeeeee, #fafafa, #eeeeee);
-            background-size: 200% 100%;
-            animation: 스켈레톤움직이기 1.2s infinite;
-        }
-
-        .가로형 .강아지사진상자 {
-            aspect-ratio: 4 / 3;
-        }
-
-        .세로형 .강아지사진상자 {
-            aspect-ratio: 3 / 4;
-        }
-
-        .강아지사진 {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .사진오류 {
-            padding: 80px 0;
-            color: #999999;
-            text-align: center;
-        }
-
-        @keyframes 스켈레톤움직이기 {
-            from {
-                background-position: 100% 0;
-            }
-            to {
-                background-position: -100% 0;
-            }
-        }
-
-        /* 하단 영역이에요. */
-        .하단바깥 {
-            margin-top: 80px;
-            background-color: #f5f5f5;
-        }
-
-        .하단 {
-            width: 100%;
-            max-width: 1168px;
-            height: 150px;
-            margin: 0 auto;
-            padding-top: 28px;
-        }
-
-        .하단제목 {
-            margin-bottom: 25px;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .하단글씨 {
-            margin-top: 12px;
+        .회고없음 {
+            padding: 55px 0;
             color: #aaaaaa;
-            font-size: 13px;
+            text-align: center;
+            font-size: 14px;
         }
 
         .위로버튼 {
@@ -384,8 +230,39 @@
             font-size: 20px;
         }
 
-        /* 글쓰기 모달이에요. */
-        .모달배경 {
+        /* 내용을 복사하면 화면 아래에 잠깐 나타나는 토스트예요. */
+        .토스트 {
+            width: 300px;
+            height: 46px;
+            border-radius: 23px;
+            background-color: #111111;
+            color: white;
+            position: fixed;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            display: none;
+            z-index: 30;
+            text-align: center;
+            line-height: 46px;
+            font-size: 14px;
+            animation-name: 토스트애니메이션;
+            animation-duration: 0.4s;
+        }
+
+        @keyframes 토스트애니메이션 {
+            from {
+                bottom: 10px;
+                opacity: 0;
+            }
+            to {
+                bottom: 30px;
+                opacity: 1;
+            }
+        }
+
+        /* 브라우저 confirm 대신 직접 만든 삭제 확인 모달이에요. */
+        .삭제모달배경 {
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.48);
@@ -398,116 +275,55 @@
             z-index: 20;
         }
 
-        .모달 {
-            width: 650px;
-            padding: 28px 30px 24px 30px;
-            border-radius: 20px;
-            background-color: white;
-        }
-
-        .모달제목 {
-            margin-bottom: 34px;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .입력묶음 {
-            margin-bottom: 22px;
-        }
-
-        .입력라벨 {
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-
-        .감정목록 {
-            display: flex;
-            gap: 18px;
-            flex-wrap: wrap;
-        }
-
-        .감정목록 label {
-            font-size: 14px;
-        }
-
-        .제목입력,
-        .내용입력 {
-            width: 100%;
-            padding: 14px;
-            border: 1px solid #dddddd;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .내용입력 {
-            height: 125px;
-            resize: none;
-        }
-
-        .모달버튼영역 {
-            display: flex;
-            gap: 14px;
-            justify-content: center;
-        }
-
-        .닫기버튼,
-        .등록버튼 {
-            width: 104px;
-            height: 48px;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: bold;
-        }
-
-        .닫기버튼 {
-            border: 1px solid #222222;
-            background-color: white;
-        }
-
-        .등록버튼 {
-            border: 0;
-            background-color: #111111;
-            color: white;
-        }
-
-        .등록버튼:disabled {
-            background-color: #cccccc;
-            cursor: default;
-        }
-
-        /* 등록 모달 위에 완료 모달을 한 번 더 보여줘요. */
-        .완료모달배경 {
-            z-index: 30;
-        }
-
-        .등록완료모달 {
+        .삭제확인모달 {
             width: 360px;
-            padding: 34px 24px 24px 24px;
+            padding: 32px 24px 24px 24px;
             border-radius: 18px;
             background-color: white;
             text-align: center;
         }
 
-        .완료메시지 {
-            margin-bottom: 28px;
+        .삭제모달제목 {
+            margin-bottom: 10px;
             font-size: 1.125rem;
             font-weight: bold;
         }
 
-        .확인버튼 {
-            width: 100px;
-            height: 44px;
-            border: 0;
+        .삭제모달설명 {
+            margin-bottom: 26px;
+            color: #888888;
+            font-size: 14px;
+        }
+
+        .삭제모달버튼영역 {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .삭제취소버튼,
+        .삭제실행버튼 {
+            width: 90px;
+            height: 42px;
             border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .삭제취소버튼 {
+            border: 1px solid #dddddd;
+            background-color: white;
+        }
+
+        .삭제실행버튼 {
+            border: 0;
             background-color: #111111;
             color: white;
-            font-size: 14px;
         }
 
         /* 779px 이하에서는 모바일 화면으로 바꿔요. */
         @media (max-width: 779px) {
             .페이지 {
-                padding: 0 20px;
+                padding: 0 19px;
             }
 
             .상단 {
@@ -515,7 +331,14 @@
             }
 
             .로고 {
+                display: none;
+            }
+
+            .모바일상세제목 {
+                display: block;
                 font-size: 1rem;
+                font-weight: bold;
+                cursor: pointer;
             }
 
             .다크모드 {
@@ -533,511 +356,308 @@
                 height: 16px;
             }
 
-            .배너 {
-                height: 14rem;
-                border-radius: 20px;
+            .상세영역 {
+                margin-top: 28px;
             }
 
-            .탭 {
-                height: 78px;
-                gap: 20px;
-            }
-
-            .탭버튼 {
-                padding: 0 4px 10px 4px;
+            .상세제목 {
+                padding-bottom: 14px;
                 font-size: 1rem;
             }
 
-            .검색영역 {
-                height: auto;
-                margin: 30px 0 40px 0;
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 14px;
+            .일기정보 {
+                height: 56px;
             }
 
-            .검색창 {
-                width: 100%;
-                grid-column: 1 / 3;
-                grid-row: 1;
+            .감정정보 {
+                gap: 8px;
             }
 
-            .감정선택 {
-                width: 96px;
-                grid-column: 1;
-                grid-row: 2;
+            .감정이모지 {
+                font-size: 1.5rem;
             }
 
-            .글쓰기버튼 {
-                margin-left: 0;
-                grid-column: 2;
-                grid-row: 2;
-                justify-self: end;
-            }
-
-            /* 모바일에서는 카드가 한 줄에 2개씩 보여요. */
-            .일기목록 {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                column-gap: 16px;
-                row-gap: 36px;
-            }
-
-            .카드,
-            .사진상자 {
-                width: 100%;
-            }
-
-            .카드 {
-                min-width: 0;
-            }
-
-            .사진상자 {
-                height: 7rem;
-                border-radius: 12px;
-            }
-
-            .이모지원 {
-                width: 5rem;
-                height: 5rem;
-                font-size: 3rem;
-            }
-
-            .삭제버튼 {
-                width: 22px;
-                height: 22px;
-                top: 8px;
-                right: 8px;
-                font-size: 15px;
-            }
-
-            .카드정보 {
-                margin-top: 12px;
-                gap: 5px;
-                font-size: 0.75rem;
-            }
-
-            .날짜 {
-                white-space: nowrap;
-            }
-
-            .카드제목 {
-                margin-top: 9px;
+            .감정글씨 {
                 font-size: 0.875rem;
             }
 
-            .사진도구 {
-                height: 64px;
+            .작성일 {
+                font-size: 0.75rem;
             }
 
-            .강아지사진목록 {
+            .내용제목 {
+                margin-top: 14px;
+                margin-bottom: 14px;
+                font-size: 0.875rem;
+            }
+
+            .일기내용 {
+                min-height: 8rem;
+                line-height: 1.55;
+                font-size: 0.875rem;
+            }
+
+            .복사버튼 {
+                font-size: 0.75rem;
+            }
+
+            .관리버튼영역 {
+                margin-top: 20px;
+                margin-bottom: 14px;
+            }
+
+            .관리버튼 {
+                height: 36px;
+                padding: 0 13px;
+                font-size: 0.75rem;
+            }
+
+            .회고영역 {
+                padding-top: 22px;
+            }
+
+            .회고제목 {
+                margin-bottom: 16px;
+                font-size: 0.875rem;
+            }
+
+            .회고입력영역 {
+                gap: 10px;
+            }
+
+            .회고입력 {
                 width: 100%;
+                height: 42px;
+                padding: 0 13px;
+                font-size: 0.75rem;
             }
 
-            .하단바깥 {
-                margin-top: 60px;
+            .회고등록버튼 {
+                width: 48px;
+                height: 42px;
+                font-size: 0.75rem;
             }
 
-            .하단 {
-                height: 140px;
-                padding: 24px 20px 0 20px;
+            .회고목록 {
+                margin-top: 10px;
+            }
+
+            .회고한개 {
+                padding: 14px 0;
+                font-size: 0.75rem;
+            }
+
+            .회고날짜 {
+                margin-left: 8px;
+            }
+
+            .회고없음 {
+                padding: 45px 0;
+                font-size: 0.75rem;
             }
 
             .위로버튼 {
                 display: none;
             }
 
-            .모달 {
+            .토스트,
+            .삭제확인모달 {
                 width: 90%;
-                padding: 24px;
-                border-radius: 22px;
-            }
-
-            .등록완료모달 {
-                width: 90%;
-            }
-
-            .모달제목 {
-                margin-bottom: 28px;
-                font-size: 1.25rem;
-            }
-
-            .감정목록 {
-                gap: 14px;
-            }
-
-            .내용입력 {
-                height: 120px;
             }
         }
     </style>
     <script>
-        /* 처음 화면에 보여 줄 예시 데이터예요. */
-        const 기본일기목록 = [
-            { 번호: 1, 감정: "슬퍼요", 이모지: "😢", 날짜: "2026. 08. 12", 제목: "비가 와서 조금 울적했던 날", 내용: "비 오는 창밖을 보며 조용히 하루를 보냈다." },
-            { 번호: 2, 감정: "놀랐어요", 이모지: "😲", 날짜: "2026. 08. 12", 제목: "친구가 깜짝 선물을 주었다", 내용: "생각하지 못한 선물을 받아서 정말 놀랐다." },
-            { 번호: 3, 감정: "화나요", 이모지: "😠", 날짜: "2026. 08. 12", 제목: "버스를 눈앞에서 놓쳤다", 내용: "조금만 빨리 나올 걸 하는 생각이 들었다." },
-            { 번호: 4, 감정: "행복해요", 이모지: "😊", 날짜: "2026. 08. 12", 제목: "좋아하는 사람들과 맛있는 저녁", 내용: "함께 이야기하고 웃어서 행복한 하루였다." },
-            { 번호: 5, 감정: "기타", 이모지: "🤔", 날짜: "2026. 08. 11", 제목: "오늘은 생각이 많았던 하루", 내용: "앞으로 하고 싶은 일을 천천히 정리해 보았다." },
-            { 번호: 6, 감정: "놀랐어요", 이모지: "😲", 날짜: "2026. 08. 11", 제목: "갑자기 눈이 내리기 시작했다", 내용: "봄인 줄 알았는데 눈이 와서 신기했다." },
-            { 번호: 7, 감정: "화나요", 이모지: "😠", 날짜: "2026. 08. 11", 제목: "할 일이 한꺼번에 몰려왔다", 내용: "하나씩 차근차근 해 보기로 마음먹었다." },
-            { 번호: 8, 감정: "행복해요", 이모지: "😊", 날짜: "2026. 08. 11", 제목: "산책길에서 예쁜 꽃을 발견했다", 내용: "작은 꽃 덕분에 기분이 좋아졌다." },
-            { 번호: 9, 감정: "슬퍼요", 이모지: "😢", 날짜: "2026. 08. 10", 제목: "기대했던 약속이 취소되었다", 내용: "아쉬웠지만 집에서 편안하게 쉬었다." },
-            { 번호: 10, 감정: "화나요", 이모지: "😠", 날짜: "2026. 08. 10", 제목: "컴퓨터가 갑자기 멈춰 버렸다", 내용: "작성하던 내용을 잃어서 속상했다." },
-            { 번호: 11, 감정: "행복해요", 이모지: "😊", 날짜: "2026. 08. 10", 제목: "오랜만에 푹 쉬었던 일요일", 내용: "늦잠도 자고 좋아하는 영화도 보았다." }
-        ]
-
         let 일기목록 = []
-        let 선택한감정 = "전체"
-        let 입력한검색어 = ""
-        let 강아지사진을불러왔는지 = false
+        let 선택한일기 = {}
+        let 회고목록 = []
 
-        /* 감정에 맞는 배경색과 글씨색을 알려 주는 함수예요. */
-        function 감정배경가져오기(감정) {
-            if (감정 === "행복해요") return "행복배경"
-            if (감정 === "슬퍼요") return "슬픔배경"
-            if (감정 === "놀랐어요") return "놀람배경"
-            if (감정 === "화나요") return "화남배경"
-            return "기타배경"
+        function 상세내용그리기() {
+            document.getElementById("상세제목").innerText = 선택한일기.제목
+            document.getElementById("감정이모지").innerText = 선택한일기.이모지
+            document.getElementById("감정글씨").innerText = 선택한일기.감정
+            document.getElementById("감정글씨").style.color = 감정색가져오기(선택한일기.감정)
+            document.getElementById("작성일").innerText = 선택한일기.날짜 + "  작성"
+            document.getElementById("일기내용").innerText = 선택한일기.내용
         }
 
-        function 감정글씨가져오기(감정) {
-            if (감정 === "행복해요") return "행복글씨"
-            if (감정 === "슬퍼요") return "슬픔글씨"
-            if (감정 === "놀랐어요") return "놀람글씨"
-            if (감정 === "화나요") return "화남글씨"
-            return "기타글씨"
+        function 감정색가져오기(감정) {
+            if (감정 === "행복해요") return "#ff5b5b"
+            if (감정 === "슬퍼요") return "#29b6d6"
+            if (감정 === "놀랐어요") return "#dd9d20"
+            if (감정 === "화나요") return "#777777"
+            return "#b252df"
         }
 
-        /* 일기 한 개를 카드 HTML로 바꾸는 함수예요. */
-        function 카드한개만들기(일기) {
-            return `
-                <div class="카드" onclick="상세페이지가기(${일기.번호})">
-                    <div class="사진상자 ${감정배경가져오기(일기.감정)}">
-                        <div class="이모지원">${일기.이모지}</div>
-                        <button class="삭제버튼" onclick="일기삭제하기(event, ${일기.번호})">×</button>
-                    </div>
-                    <div class="카드정보">
-                        <div class="${감정글씨가져오기(일기.감정)}">${일기.감정}</div>
-                        <div class="날짜">${일기.날짜}</div>
-                    </div>
-                    <div class="카드제목">${일기.제목}</div>
-                </div>
-            `
-        }
-
-        /* 받은 배열을 반복해서 화면에 넣어요. */
-        function 일기목록그리기(보여줄목록) {
-            let 카드HTML = ""
-
-            보여줄목록.map(function (일기) {
-                카드HTML = 카드HTML + 카드한개만들기(일기)
-            })
-
-            if (카드HTML === "") {
-                카드HTML = '<div class="결과없음">검색 결과가 없습니다.</div>'
-            }
-
-            document.getElementById("일기목록").innerHTML = 카드HTML
-        }
-
-        /* 탭을 누르면 필요한 메뉴만 보여줘요. */
-        function 메뉴이동(메뉴이름) {
-            const 일기메뉴 = document.getElementById("일기메뉴")
-            const 사진메뉴 = document.getElementById("사진메뉴")
-            const 일기탭 = document.getElementById("일기탭")
-            const 사진탭 = document.getElementById("사진탭")
-
-            if (메뉴이름 === "일기") {
-                일기메뉴.style.display = "block"
-                사진메뉴.style.display = "none"
-                일기탭.className = "탭버튼 선택된탭"
-                사진탭.className = "탭버튼"
-            } else {
-                일기메뉴.style.display = "none"
-                사진메뉴.style.display = "block"
-                일기탭.className = "탭버튼"
-                사진탭.className = "탭버튼 선택된탭"
-
-                if (강아지사진을불러왔는지 === false) {
-                    강아지사진불러오기()
-                }
-            }
-        }
-
-        /* 강아지 사진 한 장을 만드는 작은 컴포넌트예요. */
-        function 강아지사진컴포넌트(사진주소) {
-            return `
-                <div class="강아지사진상자">
-                    <img class="강아지사진" src="${사진주소}" alt="강아지 사진" onload="사진로딩완료(event)" />
-                </div>
-            `
-        }
-
-        function 강아지사진불러오기() {
-            const 사진목록 = document.getElementById("강아지사진목록")
-            강아지사진을불러왔는지 = true
-
-            사진목록.innerHTML = `
-                <div class="강아지사진상자"></div>
-                <div class="강아지사진상자"></div>
-                <div class="강아지사진상자"></div>
-            `
-
-            fetch("https://dog.ceo/api/breeds/image/random/10")
-                .then(function (받아온결과) {
-                    return 받아온결과.json()
-                })
-                .then(function (객체만뽑힌결과) {
-                    사진목록.innerHTML = 객체만뽑힌결과.message.map(function (사진주소) {
-                        return 강아지사진컴포넌트(사진주소)
-                    }).join("")
-                })
-                .catch(function () {
-                    강아지사진을불러왔는지 = false
-                    사진목록.innerHTML = '<div class="사진오류">사진을 불러오지 못했어요.</div>'
-                })
-        }
-
-        function 사진비율바꾸기(event) {
-            document.getElementById("강아지사진목록").className = "강아지사진목록 " + event.target.value
-        }
-
-        function 사진로딩완료(event) {
-            event.target.style.opacity = 1
-        }
-
-        /* localStorage에 저장된 일기를 준비해요. */
         function 처음화면준비하기() {
+            const 주소값 = new URLSearchParams(location.search)
+            const 일기번호 = 주소값.get("number")
             const 저장된일기 = localStorage.getItem("감정일기목록")
 
             if (저장된일기 === null) {
-                일기목록 = 기본일기목록
-                localStorage.setItem("감정일기목록", JSON.stringify(일기목록))
-            } else {
-                일기목록 = JSON.parse(저장된일기)
+                alert("메인 페이지에서 일기를 먼저 확인해 주세요.")
+                location.href = "./homework-example.html"
+                return
             }
 
-            일기목록그리기(일기목록)
-        }
+            일기목록 = JSON.parse(저장된일기)
 
-        /* select 또는 input이 바뀌면 조건에 맞는 일기만 찾아요. */
-        function 일기검색하기() {
-            const 검색결과 = 일기목록.filter(function (일기) {
-                const 감정이맞는지 = 선택한감정 === "전체" || 일기.감정 === 선택한감정
-                const 제목에있는지 = 일기.제목.indexOf(입력한검색어) !== -1
-                return 감정이맞는지 && 제목에있는지
+            const 찾은일기 = 일기목록.filter(function (일기) {
+                return String(일기.번호) === 일기번호
             })
 
-            일기목록그리기(검색결과)
+            if (찾은일기.length === 0) {
+                alert("일기를 찾을 수 없습니다.")
+                location.href = "./homework-example.html"
+                return
+            }
+
+            선택한일기 = 찾은일기[0]
+            상세내용그리기()
         }
 
-        function 감정바꾸기(event) {
-            선택한감정 = event.target.value
-            일기검색하기()
+        /* 일기 내용을 클립보드에 복사하고 토스트를 보여줘요. */
+        function 내용복사하기() {
+            const 일기내용 = document.getElementById("일기내용").innerText
+            navigator.clipboard.writeText(일기내용)
+
+            document.getElementById("복사토스트").style.display = "block"
+
+            setTimeout(function () {
+                document.getElementById("복사토스트").style.display = "none"
+            }, 2000)
         }
 
-        function 검색어바꾸기(event) {
-            입력한검색어 = event.target.value
-            일기검색하기()
-        }
+        function 일기수정하기() {
+            const 바꿀제목 = prompt("수정할 제목을 입력해 주세요.", 선택한일기.제목)
+            if (바꿀제목 === null || 바꿀제목 === "") return
 
-        function 상세페이지가기(번호) {
-            location.href = "./homework-detail.html?number=" + 번호
-        }
-
-        function 일기삭제하기(event, 번호) {
-            event.stopPropagation()
-
-            const 정말삭제할지 = confirm("이 일기를 삭제할까요?")
-            if (정말삭제할지 === false) return
-
-            일기목록 = 일기목록.filter(function (일기) {
-                return 일기.번호 !== 번호
-            })
-
+            선택한일기.제목 = 바꿀제목
             localStorage.setItem("감정일기목록", JSON.stringify(일기목록))
-            일기검색하기()
+            상세내용그리기()
         }
 
-        function 모달열기(모달아이디) {
+        function 삭제모달열기() {
             window.scrollTo({ top: 0 })
-            document.getElementById(모달아이디).style.display = "flex"
+            document.getElementById("삭제모달배경").style.display = "flex"
             document.body.style.overflow = "hidden"
         }
 
-        function 모달닫기(모달아이디) {
-            document.getElementById(모달아이디).style.display = "none"
+        function 삭제모달닫기() {
+            document.getElementById("삭제모달배경").style.display = "none"
             document.body.style.overflow = ""
         }
 
-        function 등록모달모두닫기() {
-            document.getElementById("등록완료모달배경").style.display = "none"
-            document.getElementById("등록모달배경").style.display = "none"
-            document.body.style.overflow = ""
+        function 일기삭제하기() {
+            일기목록 = 일기목록.filter(function (일기) {
+                return 일기.번호 !== 선택한일기.번호
+            })
+
+            localStorage.setItem("감정일기목록", JSON.stringify(일기목록))
+            location.href = "./homework-example.html"
         }
 
-        function 선택한감정가져오기() {
-            if (document.getElementById("행복").checked) return "행복해요"
-            if (document.getElementById("슬픔").checked) return "슬퍼요"
-            if (document.getElementById("놀람").checked) return "놀랐어요"
-            if (document.getElementById("화남").checked) return "화나요"
-            return "기타"
-        }
+        function 회고등록하기() {
+            const 회고내용 = document.getElementById("회고입력").value
 
-        function 감정이모지가져오기(감정) {
-            if (감정 === "행복해요") return "😊"
-            if (감정 === "슬퍼요") return "😢"
-            if (감정 === "놀랐어요") return "😲"
-            if (감정 === "화나요") return "😠"
-            return "🤔"
-        }
-
-        function 등록버튼확인하기() {
-            const 제목 = document.getElementById("제목").value
-            const 내용 = document.getElementById("내용").value
-            document.getElementById("등록버튼").disabled = 제목 === "" || 내용 === ""
-        }
-
-        function 일기등록하기() {
-            const 감정 = 선택한감정가져오기()
-            const 오늘 = new Date()
-            const 날짜 = 오늘.getFullYear() + ". " + (오늘.getMonth() + 1) + ". " + 오늘.getDate()
-
-            const 새일기 = {
-                번호: 오늘.getTime(),
-                감정: 감정,
-                이모지: 감정이모지가져오기(감정),
-                날짜: 날짜,
-                제목: document.getElementById("제목").value,
-                내용: document.getElementById("내용").value
+            if (회고내용 === "") {
+                alert("회고를 입력해 주세요.")
+                return
             }
 
-            일기목록.push(새일기)
-            localStorage.setItem("감정일기목록", JSON.stringify(일기목록))
+            회고목록.push(회고내용)
+            document.getElementById("회고입력").value = ""
+            회고목록그리기()
+        }
 
-            document.getElementById("제목").value = ""
-            document.getElementById("내용").value = ""
-            document.getElementById("행복").checked = true
-            document.getElementById("등록버튼").disabled = true
+        function 회고목록그리기() {
+            let 회고HTML = ""
 
-            일기검색하기()
-            모달열기("등록완료모달배경")
+            회고목록.map(function (회고) {
+                회고HTML = 회고HTML + `
+                    <div class="회고한개">
+                        ${회고}<span class="회고날짜">[2024. 09. 24]</span>
+                    </div>
+                `
+            })
+
+            if (회고HTML === "") {
+                회고HTML = '<div class="회고없음">등록된 회고가 없습니다.</div>'
+            }
+
+            document.getElementById("회고목록").innerHTML = 회고HTML
+        }
+
+        function 메인으로가기() {
+            location.href = "./homework-example.html"
         }
 
         function 맨위로가기() {
             window.scrollTo({ top: 0, behavior: "smooth" })
         }
 
-        /* ESC 키를 누르면 열려 있는 등록 모달을 모두 닫아요. */
-        window.addEventListener("keydown", function (event) {
-            if (event.key === "Escape") {
-                등록모달모두닫기()
-            }
-        })
-
         window.onload = function () {
             처음화면준비하기()
+            회고목록그리기()
         }
     </script>
 </head>
 <body>
     <div class="페이지">
         <div class="상단">
-            <div class="로고">지용이의 뭔가 슬픈 다이어리</div>
+            <div class="로고" onclick="메인으로가기()">지용이의 뭔가 슬픈 다이어리</div>
+            <div class="모바일상세제목" onclick="메인으로가기()">〈 &nbsp;일기 상세</div>
             <div class="다크모드">
                 <div>다크모드</div>
                 <div class="스위치"><div class="스위치동그라미"></div></div>
             </div>
         </div>
 
-        <div class="배너">
-            <video class="배너비디오" autoplay muted loop playsinline>
-                <source src="https://videos.pexels.com/video-files/7333913/7333913-hd_1920_1080_30fps.mp4" type="video/mp4" />
-            </video>
-        </div>
+        <div class="상세영역">
+            <div class="상세제목" id="상세제목">이것은 타이틀 입니다.</div>
 
-        <div class="탭">
-            <div class="탭버튼 선택된탭" id="일기탭" onclick="메뉴이동('일기')">일기보관함</div>
-            <div class="탭버튼" id="사진탭" onclick="메뉴이동('사진')">사진보관함</div>
-        </div>
-
-        <div id="일기메뉴">
-            <div class="검색영역">
-                <select class="감정선택" onchange="감정바꾸기(event)">
-                    <option value="전체">전체</option>
-                    <option value="행복해요">행복해요</option>
-                    <option value="슬퍼요">슬퍼요</option>
-                    <option value="놀랐어요">놀랐어요</option>
-                    <option value="화나요">화나요</option>
-                    <option value="기타">기타</option>
-                </select>
-                <input class="검색창" type="text" placeholder="🔍  검색어를 입력해 주세요." oninput="검색어바꾸기(event)" />
-                <button class="글쓰기버튼" onclick="모달열기('등록모달배경')">＋ 일기쓰기</button>
+            <div class="일기정보">
+                <div class="감정정보">
+                    <div class="감정이모지" id="감정이모지">😊</div>
+                    <div class="감정글씨" id="감정글씨">행복해요</div>
+                </div>
+                <div class="작성일" id="작성일">2024. 07. 12 작성</div>
             </div>
 
-            <div class="일기목록" id="일기목록"></div>
-        </div>
+            <div class="내용제목">내용</div>
+            <div class="일기내용" id="일기내용">내용이 들어갑니다.</div>
 
-        <div class="사진메뉴" id="사진메뉴">
-            <div class="사진도구">
-                <select class="비율선택" onchange="사진비율바꾸기(event)">
-                    <option value="기본형">기본형 1:1</option>
-                    <option value="가로형">가로형 4:3</option>
-                    <option value="세로형">세로형 3:4</option>
-                </select>
+            <div class="복사영역">
+                <button class="복사버튼" onclick="내용복사하기()">▣ &nbsp; 내용 복사</button>
             </div>
-            <div class="강아지사진목록 기본형" id="강아지사진목록"></div>
-        </div>
-    </div>
 
-    <div class="하단바깥">
-        <div class="하단">
-            <div class="하단제목">지용이의 뭔가 슬픈 다이어리</div>
-            <div class="하단글씨">대표 : 슬픈지용</div>
-            <div class="하단글씨">Copyright © 2024. 슬픈지용 Co., Ltd.</div>
+            <div class="관리버튼영역">
+                <button class="관리버튼" onclick="일기수정하기()">수정</button>
+                <button class="관리버튼" onclick="삭제모달열기()">삭제</button>
+            </div>
+
+            <div class="회고영역">
+                <div class="회고제목">회고</div>
+                <div class="회고입력영역">
+                    <input class="회고입력" id="회고입력" type="text" placeholder="회고를 남겨보세요." />
+                    <button class="회고등록버튼" onclick="회고등록하기()">입력</button>
+                </div>
+                <div class="회고목록" id="회고목록"></div>
+            </div>
         </div>
     </div>
 
     <button class="위로버튼" onclick="맨위로가기()">⌃</button>
 
-    <div class="모달배경" id="등록모달배경" onclick="모달닫기('등록모달배경')">
-        <div class="모달" onclick="event.stopPropagation()">
-            <div class="모달제목">일기 쓰기</div>
+    <div class="토스트" id="복사토스트">내용이 클립보드에 복사되었어요.</div>
 
-            <div class="입력묶음">
-                <div class="입력라벨"><b>오늘 기분은 어땠나요?</b></div>
-                <div class="감정목록">
-                    <label><input id="행복" type="radio" name="emotion" checked /> 행복해요</label>
-                    <label><input id="슬픔" type="radio" name="emotion" /> 슬퍼요</label>
-                    <label><input id="놀람" type="radio" name="emotion" /> 놀랐어요</label>
-                    <label><input id="화남" type="radio" name="emotion" /> 화나요</label>
-                    <label><input id="기타" type="radio" name="emotion" /> 기타</label>
-                </div>
+    <div class="삭제모달배경" id="삭제모달배경" onclick="삭제모달닫기()">
+        <div class="삭제확인모달" onclick="event.stopPropagation()">
+            <div class="삭제모달제목">일기를 삭제할까요?</div>
+            <div class="삭제모달설명">삭제한 일기는 다시 되돌릴 수 없어요.</div>
+            <div class="삭제모달버튼영역">
+                <button class="삭제취소버튼" onclick="삭제모달닫기()">취소</button>
+                <button class="삭제실행버튼" onclick="일기삭제하기()">삭제</button>
             </div>
-
-            <div class="입력묶음">
-                <div class="입력라벨">제목</div>
-                <input class="제목입력" id="제목" type="text" placeholder="제목을 입력해 주세요." oninput="등록버튼확인하기()" />
-            </div>
-
-            <div class="입력묶음">
-                <div class="입력라벨">내용</div>
-                <textarea class="내용입력" id="내용" placeholder="내용을 입력해 주세요." oninput="등록버튼확인하기()"></textarea>
-            </div>
-
-            <div class="모달버튼영역">
-                <button class="닫기버튼" onclick="모달닫기('등록모달배경')">닫기</button>
-                <button class="등록버튼" id="등록버튼" onclick="일기등록하기()" disabled>등록하기</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 등록 모달보다 위에 겹쳐지는 등록 완료 모달이에요. -->
-    <div class="모달배경 완료모달배경" id="등록완료모달배경" onclick="등록모달모두닫기()">
-        <div class="등록완료모달" onclick="event.stopPropagation()">
-            <div class="완료메시지">등록이 완료되었습니다.</div>
-            <button class="확인버튼" onclick="등록모달모두닫기()">확인</button>
         </div>
     </div>
 </body>
